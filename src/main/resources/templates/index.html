@@ -1,0 +1,32 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Title</title>
+	<link rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
+	<script type="text/javascript" src="webjars/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="navbar">
+			<div class="navbar-inner">
+				<a class="brand" href="http://spring.io"> Spring </a>
+				<ul class="nav">
+					<li><a href="/"> Home </a></li>
+				</ul>
+			</div>
+		</div>
+		<h1>Super Special Greeting</h1>
+		<div sec:authorize="isAuthenticated()">
+			<a sec:authentication="name">Guest</a>
+			<form id="logoutForm" th:action="@{/logout}" method="post">
+				<button type="submit">Logout</button>
+			</form>
+		</div>
+
+		<div sec:authorize="isAnonymous()">
+			<a href="/login">Log in</a>
+		</div>
+		<div>Hello World</div>
+	</div>
+</body>
+</html>
