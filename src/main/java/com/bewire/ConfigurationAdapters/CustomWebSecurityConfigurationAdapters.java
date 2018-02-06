@@ -18,7 +18,7 @@ public class CustomWebSecurityConfigurationAdapters extends WebSecurityConfigure
         http
                 .antMatcher("/**")
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/webjars/**","/css/**")
+                .antMatchers("/", "/login", "/webjars/**","/css/**","/open/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

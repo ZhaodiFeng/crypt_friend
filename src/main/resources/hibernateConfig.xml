@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="connection.url">jdbc:mysql://localhost:3306/crypt_friend</property>
+    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+    <mapping class="com.bewire.DAL.Asset"/>
+      <mapping class="com.bewire.DAL.Currency"/>
+      <mapping class="com.bewire.DAL.Currencymarketprice"/>
+      <mapping class="com.bewire.DAL.Market"/>
+      <mapping class="com.bewire.DAL.Pricealarm"/>
+      <mapping class="com.bewire.DAL.Trade"/>
+      <mapping class="com.bewire.DAL.Transaction"/>
+      <mapping class="com.bewire.DAL.Transactiontype"/>
+      <mapping class="com.bewire.DAL.User"/>
+    <mapping class="com.bewire.Models.Asset"/>
+    <mapping class="com.bewire.Models.Currency"/>
+    <mapping class="com.bewire.Models.Currencymarketprice"/>
+    <mapping class="com.bewire.Models.Market"/>
+    <mapping class="com.bewire.Models.Pricealarm"/>
+    <mapping class="com.bewire.Models.Trade"/>
+    <mapping class="com.bewire.Models.Transaction"/>
+    <mapping class="com.bewire.Models.Transactiontype"/>
+    <mapping class="com.bewire.Models.User"/>
+    <!-- <property name="connection.username"/> -->
+    <!-- <property name="connection.password"/> -->
+
+    <!-- DB schema will be updated if needed -->
+    <!-- <property name="hbm2ddl.auto">update</property> -->
+  </session-factory>
+</hibernate-configuration>
