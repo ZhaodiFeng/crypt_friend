@@ -1,4 +1,5 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 <title>Title</title>
 	<link rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
@@ -16,17 +17,18 @@
 			</div>
 		</div>
 		<h1>Super Special Greeting</h1>
+
 		<div sec:authorize="isAuthenticated()">
-			<a sec:authentication="name">Guest</a>
+			<p>Hello  <a sec:authentication="name"></a></p>
 			<form id="logoutForm" th:action="@{/logout}" method="post">
 				<button type="submit">Logout</button>
 			</form>
 		</div>
 
 		<div sec:authorize="isAnonymous()">
-			<a href="/login">Log in</a>
+			<a th:href="@{/login}" href="/login">log in</a>
 		</div>
-		<div>Hello World</div>
+
 	</div>
 </body>
 </html>
