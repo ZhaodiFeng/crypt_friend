@@ -1,34 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-<title>Title</title>
+<title>Welcome</title>
 	<link rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
 	<script type="text/javascript" src="webjars/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
+
 <body>
-	<div class="container">
-		<div class="navbar">
-			<div class="navbar-inner">
-				<a class="brand" href="http://spring.io"> Spring </a>
-				<ul class="nav">
-					<li><a href="/"> Home </a></li>
-				</ul>
-			</div>
-		</div>
-		<h1>Super Special Greeting</h1>
-
-		<div sec:authorize="isAuthenticated()">
-			<p>Hello  <a sec:authentication="name"></a></p>
-			<form id="logoutForm" th:action="@{/logout}" method="post">
-				<button type="submit">Logout</button>
-			</form>
-		</div>
-
-		<div sec:authorize="isAnonymous()">
-			<a th:href="@{/login}" href="/login">log in</a>
-		</div>
-
-	</div>
+<div th:replace="header :: header"></div>
+<h1>Super Special Greeting It really worked!</h1>
 </body>
 </html>

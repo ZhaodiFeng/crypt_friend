@@ -1,12 +1,12 @@
 package com.bewire.PL.Controllers;
 
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.security.Principal;
 
 /**
@@ -18,4 +18,14 @@ public class AuthenticationController {
     public Principal user(Principal principal){
         return principal;
     }
+
+    @RequestMapping("/sub")
+    public String profile(Principal principal) throws IOException {
+        OAuth2Authentication authentication=(OAuth2Authentication) principal;
+
+        String sub="Error";
+        sub= new ObjectMapper().writeValueAsString(authentication.getUserAuthentication().getDetails());
+
+        return sub.split(",")[0].split(":")[1].replace("\"", "");
     }
+}

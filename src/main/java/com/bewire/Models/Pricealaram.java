@@ -8,13 +8,14 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-public class Currencymarketprice {
+public class Pricealaram {
     private int id;
+    private String userId;
     private int saleCurrencyId;
     private int buyCurrencyId;
     private int marketId;
     private int price;
-    private Timestamp updateTime;
+    private Timestamp expirationTime;
 
     @Id
     @Column(name = "Id", nullable = false)
@@ -24,6 +25,16 @@ public class Currencymarketprice {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "UserId", nullable = false, length = 21)
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     @Basic
@@ -67,31 +78,32 @@ public class Currencymarketprice {
     }
 
     @Basic
-    @Column(name = "UpdateTime", nullable = false)
-    public Timestamp getUpdateTime() {
-        return updateTime;
+    @Column(name = "ExpirationTime", nullable = false)
+    public Timestamp getExpirationTime() {
+        return expirationTime;
     }
 
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
+    public void setExpirationTime(Timestamp expirationTime) {
+        this.expirationTime = expirationTime;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Currencymarketprice that = (Currencymarketprice) o;
+        Pricealaram that = (Pricealaram) o;
         return id == that.id &&
                 saleCurrencyId == that.saleCurrencyId &&
                 buyCurrencyId == that.buyCurrencyId &&
                 marketId == that.marketId &&
                 price == that.price &&
-                Objects.equals(updateTime, that.updateTime);
+                Objects.equals(userId, that.userId) &&
+                Objects.equals(expirationTime, that.expirationTime);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, saleCurrencyId, buyCurrencyId, marketId, price, updateTime);
+        return Objects.hash(id, userId, saleCurrencyId, buyCurrencyId, marketId, price, expirationTime);
     }
 }

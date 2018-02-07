@@ -8,22 +8,22 @@ import java.util.Objects;
 
 @Entity
 public class User {
-    private int id;
+    private String id;
     private String name;
     private String mailAdres;
 
     @Id
-    @Column(name = "Id")
-    public int getId() {
+    @Column(name = "Id", nullable = false, length = 21)
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "Name")
+    @Column(name = "Name", nullable = false, length = 50)
     public String getName() {
         return name;
     }
@@ -33,7 +33,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "MailAdres")
+    @Column(name = "MailAdres", nullable = false, length = 50)
     public String getMailAdres() {
         return mailAdres;
     }
@@ -47,7 +47,7 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id &&
+        return Objects.equals(id, user.id) &&
                 Objects.equals(name, user.name) &&
                 Objects.equals(mailAdres, user.mailAdres);
     }

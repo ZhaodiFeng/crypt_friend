@@ -24,7 +24,8 @@
     <mapping class="com.bewire.Models.Transaction"/>
     <mapping class="com.bewire.Models.Transactiontype"/>
     <mapping class="com.bewire.Models.User"/>
-    <!-- <property name="connection.username"/> -->
+      <mapping class="com.bewire.Models.Pricealaram"/>
+      <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
 
     <!-- DB schema will be updated if needed -->

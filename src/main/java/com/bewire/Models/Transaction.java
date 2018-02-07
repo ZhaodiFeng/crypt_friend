@@ -1,19 +1,21 @@
 package com.bewire.Models;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
 public class Transaction {
     private int id;
     private int currencyId;
+    private String transactionType;
     private int amount;
-    private int dateTime;
-    private Market marketByMarketId;
-    private Trade tradeByTradeId;
+    private int tradeId;
 
     @Id
-    @Column(name = "Id")
+    @Column(name = "Id", nullable = false)
     public int getId() {
         return id;
     }
@@ -23,7 +25,7 @@ public class Transaction {
     }
 
     @Basic
-    @Column(name = "CurrencyId")
+    @Column(name = "CurrencyId", nullable = false)
     public int getCurrencyId() {
         return currencyId;
     }
@@ -33,7 +35,17 @@ public class Transaction {
     }
 
     @Basic
-    @Column(name = "Amount")
+    @Column(name = "TransactionType", nullable = false, length = 20)
+    public String getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(String transactionType) {
+        this.transactionType = transactionType;
+    }
+
+    @Basic
+    @Column(name = "Amount", nullable = false)
     public int getAmount() {
         return amount;
     }
@@ -43,13 +55,13 @@ public class Transaction {
     }
 
     @Basic
-    @Column(name = "DateTime")
-    public int getDateTime() {
-        return dateTime;
+    @Column(name = "TradeId", nullable = false)
+    public int getTradeId() {
+        return tradeId;
     }
 
-    public void setDateTime(int dateTime) {
-        this.dateTime = dateTime;
+    public void setTradeId(int tradeId) {
+        this.tradeId = tradeId;
     }
 
     @Override
@@ -60,32 +72,13 @@ public class Transaction {
         return id == that.id &&
                 currencyId == that.currencyId &&
                 amount == that.amount &&
-                dateTime == that.dateTime;
+                tradeId == that.tradeId &&
+                Objects.equals(transactionType, that.transactionType);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, currencyId, amount, dateTime);
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "MarketId", referencedColumnName = "Id", nullable = false)
-    public Market getMarketByMarketId() {
-        return marketByMarketId;
-    }
-
-    public void setMarketByMarketId(Market marketByMarketId) {
-        this.marketByMarketId = marketByMarketId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "TradeId", referencedColumnName = "Id", nullable = false)
-    public Trade getTradeByTradeId() {
-        return tradeByTradeId;
-    }
-
-    public void setTradeByTradeId(Trade tradeByTradeId) {
-        this.tradeByTradeId = tradeByTradeId;
+        return Objects.hash(id, currencyId, transactionType, amount, tradeId);
     }
 }

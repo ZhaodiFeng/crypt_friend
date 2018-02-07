@@ -13,7 +13,7 @@ public class Currency {
     private String symbol;
 
     @Id
-    @Column(name = "Id")
+    @Column(name = "Id", nullable = false)
     public int getId() {
         return id;
     }
@@ -23,7 +23,7 @@ public class Currency {
     }
 
     @Basic
-    @Column(name = "Name")
+    @Column(name = "Name", nullable = false, length = 50)
     public String getName() {
         return name;
     }
@@ -33,7 +33,7 @@ public class Currency {
     }
 
     @Basic
-    @Column(name = "Symbol")
+    @Column(name = "Symbol", nullable = true, length = 8)
     public String getSymbol() {
         return symbol;
     }

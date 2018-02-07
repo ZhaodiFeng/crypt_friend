@@ -7,5 +7,5 @@ import javax.transaction.Transactional;
 
 @Transactional
 public interface UserDAO extends CrudRepository<User,Long> {
-    public User findById();
+    public boolean existsById(String id);
 }

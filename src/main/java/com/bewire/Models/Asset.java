@@ -6,22 +6,22 @@ import java.util.Objects;
 @Entity
 @IdClass(AssetPK.class)
 public class Asset {
-    private int userId;
+    private String userId;
     private int currencyId;
     private int amount;
 
     @Id
-    @Column(name = "UserId")
-    public int getUserId() {
+    @Column(name = "UserId", nullable = false, length = 21)
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
     @Id
-    @Column(name = "CurrencyId")
+    @Column(name = "CurrencyId", nullable = false)
     public int getCurrencyId() {
         return currencyId;
     }
@@ -31,7 +31,7 @@ public class Asset {
     }
 
     @Basic
-    @Column(name = "Amount")
+    @Column(name = "Amount", nullable = false, precision = 0)
     public int getAmount() {
         return amount;
     }
@@ -45,9 +45,9 @@ public class Asset {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Asset asset = (Asset) o;
-        return userId == asset.userId &&
-                currencyId == asset.currencyId &&
-                amount == asset.amount;
+        return currencyId == asset.currencyId &&
+                amount == asset.amount &&
+                Objects.equals(userId, asset.userId);
     }
 
     @Override

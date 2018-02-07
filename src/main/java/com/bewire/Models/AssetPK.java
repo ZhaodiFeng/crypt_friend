@@ -6,20 +6,20 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class AssetPK implements Serializable {
-    private int userId;
+    private String userId;
     private int currencyId;
 
-    @Column(name = "UserId")
+    @Column(name = "UserId", nullable = false, length = 21)
     @Id
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    @Column(name = "CurrencyId")
+    @Column(name = "CurrencyId", nullable = false)
     @Id
     public int getCurrencyId() {
         return currencyId;
@@ -34,8 +34,8 @@ public class AssetPK implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AssetPK assetPK = (AssetPK) o;
-        return userId == assetPK.userId &&
-                currencyId == assetPK.currencyId;
+        return currencyId == assetPK.currencyId &&
+                Objects.equals(userId, assetPK.userId);
     }
 
     @Override

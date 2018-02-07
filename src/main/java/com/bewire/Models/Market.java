@@ -10,10 +10,10 @@ import java.util.Objects;
 public class Market {
     private int id;
     private String name;
-    private String apiAdres;
+    private Integer apiAdres;
 
     @Id
-    @Column(name = "Id")
+    @Column(name = "Id", nullable = false)
     public int getId() {
         return id;
     }
@@ -23,7 +23,7 @@ public class Market {
     }
 
     @Basic
-    @Column(name = "Name")
+    @Column(name = "Name", nullable = false, length = 50)
     public String getName() {
         return name;
     }
@@ -33,12 +33,12 @@ public class Market {
     }
 
     @Basic
-    @Column(name = "ApiAdres")
-    public String getApiAdres() {
+    @Column(name = "ApiAdres", nullable = true)
+    public Integer getApiAdres() {
         return apiAdres;
     }
 
-    public void setApiAdres(String apiAdres) {
+    public void setApiAdres(Integer apiAdres) {
         this.apiAdres = apiAdres;
     }
 
