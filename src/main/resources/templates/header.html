@@ -3,27 +3,41 @@
 <head>
 </head>
 <body>
-<div th:fragment="header" >
+<div th:fragment="header">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
     <div class="container">
-        <div class="navbar">
+
+        <div class="navbar navbar-inverse bg-inverse">
             <div class="navbar-inner">
                 <a class="brand" href="http://spring.io"> Spring </a>
                 <ul class="nav">
-                    <li><a href="/"> Home </a></li>
-                    <li><a>Profile</a></li>
-                <div sec:authorize="isAuthenticated()">
-                    <li>Hello  <a sec:authentication="name"></a></li>
                     <li>
-                        <form id="logoutForm" th:action="@{/logout}" method="post">
-                            <button type="submit">Logout</button>
-                        </form>
+                        <a href="/"> Home </a>
                     </li>
-                </div>
-                <div sec:authorize="isAnonymous()">
                     <li>
-                        <a th:href="@{/login}" href="/login">log in</a>
+                        <a>Profile</a>
                     </li>
-                </div>
+                    <li sec:authorize="isAuthenticated()">
+                        <li>
+                            <a sec:authentication="name"></a>
+                        </li>
+                        <li>
+                            <form class="form-inline my-2 my-lg-0" id="logoutForm" th:action="@{/logout}" method="post">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+                            </form>
+                        </li>
+                    </li>
+
+                    <li sec:authorize="isAnonymous()">
+                    <li>
+                        <button class="btn btn-outline-success my-2 my-sm-0">
+                            <a th:href="@{/login}" style="text-decoration:none;">Sign In</a>
+                        </button>
+                    </li>
+                    </li>
                 </ul>
             </div>
         </div>

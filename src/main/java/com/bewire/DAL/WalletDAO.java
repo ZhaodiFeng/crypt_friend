@@ -1,12 +1,12 @@
 package com.bewire.DAL;
 
-import com.bewire.Models.Asset;
+import com.bewire.Models.Wallet;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Transactional
-public interface AssetDAO extends CrudRepository<Asset,Long> {
-    public List<Asset> findAllByWalletId(int id);
+public interface WalletDAO extends CrudRepository<Wallet,Long>{
+    public List<Wallet> findAllByUserId(String id);
 }

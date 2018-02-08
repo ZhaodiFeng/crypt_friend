@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <title>Title</title>
+    <title>Assets Overview</title>
 </head>
 <body>
 <div th:replace="header :: header"></div>
 <table>
-    <th:block th:each="asset: ${assets}">
-        <tr>
-            <td th:text="${asset.CurrencyId}">...</td>
-            <td th:text="${asset.UserId}">...</td>
-            <td th:text="${asset.Amount}">...</td>
-        </tr>
+    <th:block th:each="wallet: ${overview.wallets}">
+        <th:block th:each="asset: ${wallet.assets}">
+            <tr>
+                <td th:text="${asset.asset.amount}">...</td>
+                <td th:text="${asset.currencyName}">...</td>
+            </tr>
+        </th:block>
     </th:block>
 </table>
 </body>

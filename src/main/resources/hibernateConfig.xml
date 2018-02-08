@@ -6,7 +6,7 @@
   <session-factory>
     <property name="connection.url">jdbc:mysql://localhost:3306/crypt_friend</property>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-    <mapping class="com.bewire.DAL.Asset"/>
+      <mapping class="com.bewire.DAL.Asset"/>
       <mapping class="com.bewire.DAL.Currency"/>
       <mapping class="com.bewire.DAL.Currencymarketprice"/>
       <mapping class="com.bewire.DAL.Market"/>
@@ -25,6 +25,9 @@
     <mapping class="com.bewire.Models.Transactiontype"/>
     <mapping class="com.bewire.Models.User"/>
       <mapping class="com.bewire.Models.Pricealaram"/>
+      <mapping class="com.bewire.Models.CurrencyMarketPrice"/>
+      <mapping class="com.bewire.Models.PriceAlaram"/>
+      <mapping class="com.bewire.Models.Wallet"/>
       <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
 

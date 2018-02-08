@@ -7,10 +7,11 @@ import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
-public class Market {
+public class Wallet {
     private int id;
+    private String userId;
     private String name;
-    private Integer apiAdres;
+    private String url;
 
     @Id
     @Column(name = "Id", nullable = false)
@@ -20,6 +21,16 @@ public class Market {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "User_Id", nullable = false, length = 21)
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     @Basic
@@ -33,28 +44,29 @@ public class Market {
     }
 
     @Basic
-    @Column(name = "Api_Adres", nullable = true)
-    public Integer getApiAdres() {
-        return apiAdres;
+    @Column(name = "Url", nullable = true, length = 255)
+    public String getUrl() {
+        return url;
     }
 
-    public void setApiAdres(Integer apiAdres) {
-        this.apiAdres = apiAdres;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Market market = (Market) o;
-        return id == market.id &&
-                Objects.equals(name, market.name) &&
-                Objects.equals(apiAdres, market.apiAdres);
+        Wallet wallet = (Wallet) o;
+        return id == wallet.id &&
+                Objects.equals(userId, wallet.userId) &&
+                Objects.equals(name, wallet.name) &&
+                Objects.equals(url, wallet.url);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, name, apiAdres);
+        return Objects.hash(id, userId, name, url);
     }
 }

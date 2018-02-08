@@ -6,22 +6,33 @@ import java.util.Objects;
 @Entity
 @IdClass(AssetPK.class)
 public class Asset {
-    private String userId;
+    private int id;
+    private int walletId;
     private int currencyId;
     private int amount;
 
     @Id
-    @Column(name = "UserId", nullable = false, length = 21)
-    public String getUserId() {
-        return userId;
+    @Column(name = "Id", nullable = false)
+    public int getId() {
+        return id;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Basic
+    @Column(name = "Wallet_Id", nullable = false)
+    public int getWalletId() {
+        return walletId;
+    }
+
+    public void setWalletId(int walletId) {
+        this.walletId = walletId;
     }
 
     @Id
-    @Column(name = "CurrencyId", nullable = false)
+    @Column(name = "Currency_Id", nullable = false)
     public int getCurrencyId() {
         return currencyId;
     }
@@ -45,14 +56,15 @@ public class Asset {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Asset asset = (Asset) o;
-        return currencyId == asset.currencyId &&
-                amount == asset.amount &&
-                Objects.equals(userId, asset.userId);
+        return id == asset.id &&
+                walletId == asset.walletId &&
+                currencyId == asset.currencyId &&
+                amount == asset.amount;
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(userId, currencyId, amount);
+        return Objects.hash(id, walletId, currencyId, amount);
     }
 }

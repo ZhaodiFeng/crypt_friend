@@ -3,7 +3,6 @@ package com.bewire.ConfigurationAdapters;
 import com.bewire.DAL.UserDAO;
 import com.bewire.Models.User;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 
 @Component
 public class CustomAuthenticationSuccessHandeler extends
