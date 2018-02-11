@@ -1,6 +1,5 @@
 security:
   oauth2:
-
     client:
       clientId: 576752392218-a8qekoalhrv2o221mi1c2d4c54ajnqr4.apps.googleusercontent.com
       clientSecret: mtBz_NE6ms3ItxGFC0RRQ59l

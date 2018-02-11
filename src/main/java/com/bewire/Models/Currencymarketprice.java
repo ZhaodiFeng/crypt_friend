@@ -1,14 +1,12 @@
 package com.bewire.Models;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-public class Currencymarketprice {
+@Table(name = "currency_market_price", schema = "crypt_friend", catalog = "")
+public class CurrencyMarketPrice {
     private int id;
     private int saleCurrencyId;
     private int buyCurrencyId;
@@ -27,7 +25,7 @@ public class Currencymarketprice {
     }
 
     @Basic
-    @Column(name = "SaleCurrencyId", nullable = false)
+    @Column(name = "Sale_Currency_Id", nullable = false)
     public int getSaleCurrencyId() {
         return saleCurrencyId;
     }
@@ -37,7 +35,7 @@ public class Currencymarketprice {
     }
 
     @Basic
-    @Column(name = "BuyCurrencyId", nullable = false)
+    @Column(name = "Buy_Currency_Id", nullable = false)
     public int getBuyCurrencyId() {
         return buyCurrencyId;
     }
@@ -47,7 +45,7 @@ public class Currencymarketprice {
     }
 
     @Basic
-    @Column(name = "MarketId", nullable = false)
+    @Column(name = "Market_Id", nullable = false)
     public int getMarketId() {
         return marketId;
     }
@@ -67,7 +65,7 @@ public class Currencymarketprice {
     }
 
     @Basic
-    @Column(name = "UpdateTime", nullable = false)
+    @Column(name = "Update_Time", nullable = false)
     public Timestamp getUpdateTime() {
         return updateTime;
     }
@@ -80,7 +78,7 @@ public class Currencymarketprice {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Currencymarketprice that = (Currencymarketprice) o;
+        CurrencyMarketPrice that = (CurrencyMarketPrice) o;
         return id == that.id &&
                 saleCurrencyId == that.saleCurrencyId &&
                 buyCurrencyId == that.buyCurrencyId &&

@@ -1,14 +1,12 @@
 package com.bewire.Models;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-public class Pricealaram {
+@Table(name = "price_alaram", schema = "crypt_friend", catalog = "")
+public class PriceAlaram {
     private int id;
     private String userId;
     private int saleCurrencyId;
@@ -28,7 +26,7 @@ public class Pricealaram {
     }
 
     @Basic
-    @Column(name = "UserId", nullable = false, length = 21)
+    @Column(name = "User_Id", nullable = false, length = 21)
     public String getUserId() {
         return userId;
     }
@@ -38,7 +36,7 @@ public class Pricealaram {
     }
 
     @Basic
-    @Column(name = "SaleCurrencyId", nullable = false)
+    @Column(name = "Sale_Currency_Id", nullable = false)
     public int getSaleCurrencyId() {
         return saleCurrencyId;
     }
@@ -48,7 +46,7 @@ public class Pricealaram {
     }
 
     @Basic
-    @Column(name = "BuyCurrencyId", nullable = false)
+    @Column(name = "Buy_Currency_Id", nullable = false)
     public int getBuyCurrencyId() {
         return buyCurrencyId;
     }
@@ -58,7 +56,7 @@ public class Pricealaram {
     }
 
     @Basic
-    @Column(name = "MarketId", nullable = false)
+    @Column(name = "Market_Id", nullable = false)
     public int getMarketId() {
         return marketId;
     }
@@ -78,7 +76,7 @@ public class Pricealaram {
     }
 
     @Basic
-    @Column(name = "ExpirationTime", nullable = false)
+    @Column(name = "Expiration_Time", nullable = false)
     public Timestamp getExpirationTime() {
         return expirationTime;
     }
@@ -91,7 +89,7 @@ public class Pricealaram {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Pricealaram that = (Pricealaram) o;
+        PriceAlaram that = (PriceAlaram) o;
         return id == that.id &&
                 saleCurrencyId == that.saleCurrencyId &&
                 buyCurrencyId == that.buyCurrencyId &&
