@@ -1,9 +1,6 @@
 package com.bewire.Models;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -13,6 +10,7 @@ public class Currency {
     private String symbol;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "Id", nullable = false)
     public int getId() {
         return id;
@@ -22,8 +20,7 @@ public class Currency {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "Name", nullable = false, length = 255)
+    @Column(name = "Name", nullable = false, length = 255,unique = true)
     public String getName() {
         return name;
     }
@@ -32,7 +29,6 @@ public class Currency {
         this.name = name;
     }
 
-    @Basic
     @Column(name = "Symbol", nullable = true, length = 255)
     public String getSymbol() {
         return symbol;

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <title>Your Assets</title>
+    <title>Currencies</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/bootstrap-reboot.css}"/>
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
@@ -15,22 +15,18 @@
         <thead class="thead-dark">
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Amount</th>
             <th scope="col">Currency</th>
-            <th scope="col">Wallet</th>
+            <th scope="col">Symbol</th>
         </tr>
         </thead>
         <tbody>
-        <th:block th:each="wallet,iter1: ${overview.wallets}">
-            <th:block th:each="asset,iter2: ${wallet.assets}">
+            <th:block th:each="currency,iter: ${currencies}">
                 <tr>
-                    <th scope="row" th:text="${iter2.index}+1">1</th>
-                    <td th:text="${asset.asset.amount}">...</td>
-                    <td th:text="${asset.currencyName}">...</td>
-                    <td th:text="${wallet.wallet.name}"></td>
+                    <th scope="row" th:text="${iter.index}+1">1</th>
+                    <td th:text="${currency.name}">...</td>
+                    <td th:text="${currency.symbol}">...</td>
                 </tr>
             </th:block>
-        </th:block>
         </tbody>
     </table>
 </div>

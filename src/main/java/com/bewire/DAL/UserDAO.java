@@ -5,7 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import javax.transaction.Transactional;
 
-@Transactional
 public interface UserDAO extends CrudRepository<User,Long> {
     public boolean existsById(String id);
     public User findFirstById(String id);

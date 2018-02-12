@@ -24,8 +24,7 @@ public class PriceAlaram {
     public void setId(int id) {
         this.id = id;
     }
-
-    @Basic
+    
     @Column(name = "User_Id", nullable = false, length = 21)
     public String getUserId() {
         return userId;
@@ -35,7 +34,6 @@ public class PriceAlaram {
         this.userId = userId;
     }
 
-    @Basic
     @Column(name = "Sale_Currency_Id", nullable = false)
     public int getSaleCurrencyId() {
         return saleCurrencyId;
@@ -45,7 +43,6 @@ public class PriceAlaram {
         this.saleCurrencyId = saleCurrencyId;
     }
 
-    @Basic
     @Column(name = "Buy_Currency_Id", nullable = false)
     public int getBuyCurrencyId() {
         return buyCurrencyId;
@@ -55,7 +52,6 @@ public class PriceAlaram {
         this.buyCurrencyId = buyCurrencyId;
     }
 
-    @Basic
     @Column(name = "Market_Id", nullable = false)
     public int getMarketId() {
         return marketId;
@@ -65,7 +61,6 @@ public class PriceAlaram {
         this.marketId = marketId;
     }
 
-    @Basic
     @Column(name = "Price", nullable = false, precision = 0)
     public int getPrice() {
         return price;
@@ -75,7 +70,6 @@ public class PriceAlaram {
         this.price = price;
     }
 
-    @Basic
     @Column(name = "Expiration_Time", nullable = false)
     public Timestamp getExpirationTime() {
         return expirationTime;

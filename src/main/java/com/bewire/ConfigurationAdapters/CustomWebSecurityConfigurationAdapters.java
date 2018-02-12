@@ -5,10 +5,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
@@ -62,6 +65,7 @@ public class CustomWebSecurityConfigurationAdapters extends WebSecurityConfigure
                 .authenticated()
                 .and().logout().logoutSuccessUrl("/").permitAll()
                 .and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
+
     }
 
     private Filter ssoFilter(){
@@ -83,4 +87,7 @@ public class CustomWebSecurityConfigurationAdapters extends WebSecurityConfigure
         registration.setOrder(-100);
         return registration;
     }
+
+
+
 }

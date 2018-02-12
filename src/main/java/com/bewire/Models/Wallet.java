@@ -23,7 +23,6 @@ public class Wallet {
         this.id = id;
     }
 
-    @Basic
     @Column(name = "User_Id", nullable = false, length = 21)
     public String getUserId() {
         return userId;
@@ -33,7 +32,6 @@ public class Wallet {
         this.userId = userId;
     }
 
-    @Basic
     @Column(name = "Name", nullable = false, length = 255)
     public String getName() {
         return name;
@@ -43,7 +41,6 @@ public class Wallet {
         this.name = name;
     }
 
-    @Basic
     @Column(name = "Url", nullable = true, length = 255)
     public String getUrl() {
         return url;

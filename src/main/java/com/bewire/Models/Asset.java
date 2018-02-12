@@ -21,7 +21,6 @@ public class Asset {
         this.id = id;
     }
 
-    @Basic
     @Column(name = "Wallet_Id", nullable = false)
     public int getWalletId() {
         return walletId;
@@ -41,7 +40,6 @@ public class Asset {
         this.currencyId = currencyId;
     }
 
-    @Basic
     @Column(name = "Amount", nullable = false, precision = 0)
     public int getAmount() {
         return amount;

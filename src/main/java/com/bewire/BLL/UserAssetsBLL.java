@@ -7,17 +7,19 @@ import com.bewire.DAL.WalletDAO;
 import com.bewire.Models.Asset;
 import com.bewire.Models.User;
 import com.bewire.Models.Wallet;
-import com.bewire.PL.Controllers.DTO.AssetCurrencyDTO;
-import com.bewire.PL.Controllers.DTO.UserWalletsDTO;
-import com.bewire.PL.Controllers.DTO.WalletAssetsDTO;
+
+import com.bewire.PL.DTO.AssetCurrencyDTO;
+import com.bewire.PL.DTO.UserWalletsDTO;
+import com.bewire.PL.DTO.WalletAssetsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserAssetsBLL {
+public class UserAssetsBLL implements IUserAssetsBLL{
     @Autowired
     private WalletDAO walletDAO;
     @Autowired
@@ -27,6 +29,7 @@ public class UserAssetsBLL {
     @Autowired
     private UserDAO userDAO;
 
+    @Transactional
     public UserWalletsDTO getAllWalletsAndAssets(String id){
        List<Wallet> wallets= walletDAO.findAllByUserId(id);
        List<WalletAssetsDTO> walletAssetsDTOS=new ArrayList<WalletAssetsDTO>();
@@ -47,3 +50,4 @@ public class UserAssetsBLL {
     }
 
 }
+

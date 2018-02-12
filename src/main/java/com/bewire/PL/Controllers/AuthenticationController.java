@@ -5,6 +5,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -27,5 +29,10 @@ public class AuthenticationController {
         sub= new ObjectMapper().writeValueAsString(authentication.getUserAuthentication().getDetails());
 
         return sub.split(",")[0].split(":")[1].replace("\"", "");
+    }
+
+    @RequestMapping("/unauthenticated")
+    public ModelAndView unauthenticated(){
+        return new ModelAndView("redirect:/login");
     }
 }

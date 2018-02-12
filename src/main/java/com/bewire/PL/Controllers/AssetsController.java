@@ -1,11 +1,12 @@
 package com.bewire.PL.Controllers;
 
+import com.bewire.BLL.IUserAssetsBLL;
 import com.bewire.BLL.UserAssetsBLL;
 import com.bewire.DAL.AssetDAO;
 import com.bewire.DAL.WalletDAO;
 import com.bewire.Models.Asset;
 import com.bewire.Models.Wallet;
-import com.bewire.PL.Controllers.DTO.UserWalletsDTO;
+import com.bewire.PL.DTO.UserWalletsDTO;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;

@@ -1,4 +1,4 @@
-package com.bewire.PL.Controllers.DTO;
+package com.bewire.PL.DTO;
 
 import com.bewire.Models.User;
 

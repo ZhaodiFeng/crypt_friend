@@ -22,7 +22,6 @@ public class Market {
         this.id = id;
     }
 
-    @Basic
     @Column(name = "Name", nullable = false, length = 255)
     public String getName() {
         return name;
@@ -32,7 +31,6 @@ public class Market {
         this.name = name;
     }
 
-    @Basic
     @Column(name = "Api_Adres", nullable = true)
     public Integer getApiAdres() {
         return apiAdres;

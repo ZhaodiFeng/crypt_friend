@@ -24,7 +24,6 @@ public class CurrencyMarketPrice {
         this.id = id;
     }
 
-    @Basic
     @Column(name = "Sale_Currency_Id", nullable = false)
     public int getSaleCurrencyId() {
         return saleCurrencyId;
@@ -34,7 +33,6 @@ public class CurrencyMarketPrice {
         this.saleCurrencyId = saleCurrencyId;
     }
 
-    @Basic
     @Column(name = "Buy_Currency_Id", nullable = false)
     public int getBuyCurrencyId() {
         return buyCurrencyId;
@@ -44,7 +42,6 @@ public class CurrencyMarketPrice {
         this.buyCurrencyId = buyCurrencyId;
     }
 
-    @Basic
     @Column(name = "Market_Id", nullable = false)
     public int getMarketId() {
         return marketId;
@@ -54,7 +51,6 @@ public class CurrencyMarketPrice {
         this.marketId = marketId;
     }
 
-    @Basic
     @Column(name = "Price", nullable = false, precision = 0)
     public int getPrice() {
         return price;
@@ -64,7 +60,6 @@ public class CurrencyMarketPrice {
         this.price = price;
     }
 
-    @Basic
     @Column(name = "Update_Time", nullable = false)
     public Timestamp getUpdateTime() {
         return updateTime;

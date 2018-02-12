@@ -22,7 +22,6 @@ public class User {
         this.id = id;
     }
 
-    @Basic
     @Column(name = "Name", nullable = false, length = 255)
     public String getName() {
         return name;
@@ -32,7 +31,6 @@ public class User {
         this.name = name;
     }
 
-    @Basic
     @Column(name = "Mail_Adres", nullable = false, length = 255)
     public String getMailAdres() {
         return mailAdres;

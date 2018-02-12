@@ -39,17 +39,14 @@ public class CustomAuthenticationSuccessHandeler extends
         super.onAuthenticationSuccess(request, response, authentication);
         //Now add your custom logic to update database
         OAuth2Authentication auth=(OAuth2Authentication)authentication;
-        String[] details= new ObjectMapper().writeValueAsString(auth.getUserAuthentication().getDetails()).split(",");
-        for (String d:
-             details) {
-            System.out.println(d);
-        }
+        String[] details= new ObjectMapper().writeValueAsString(auth.getUserAuthentication().getDetails())
+                .replace("\"","").split(",");
         String id= Arrays.stream(details).filter(s -> s.contains("sub"))
-                .findFirst().get().split(":")[1].replace("\"","");
+                .findFirst().get().split(":")[1];
         String name= Arrays.stream(details).filter(s -> s.contains("name"))
-                .findFirst().get().split(":")[1].replace("\"","");
+                .findFirst().get().split(":")[1];
         String email= Arrays.stream(details).filter(s -> s.contains("email"))
-                .findFirst().get().split(":")[1].replace("\"","");
+                .findFirst().get().split(":")[1];
         if (!userDAO.existsById(id)){
             User user=new User();
             user.setId(id);
