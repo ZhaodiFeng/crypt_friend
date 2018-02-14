@@ -15,6 +15,7 @@ public class CurrencyMarketPrice {
     private Timestamp updateTime;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "Id", nullable = false)
     public int getId() {
         return id;
@@ -23,6 +24,7 @@ public class CurrencyMarketPrice {
     public void setId(int id) {
         this.id = id;
     }
+
 
     @Column(name = "Sale_Currency_Id", nullable = false)
     public int getSaleCurrencyId() {
@@ -33,6 +35,7 @@ public class CurrencyMarketPrice {
         this.saleCurrencyId = saleCurrencyId;
     }
 
+
     @Column(name = "Buy_Currency_Id", nullable = false)
     public int getBuyCurrencyId() {
         return buyCurrencyId;
@@ -41,6 +44,7 @@ public class CurrencyMarketPrice {
     public void setBuyCurrencyId(int buyCurrencyId) {
         this.buyCurrencyId = buyCurrencyId;
     }
+
 
     @Column(name = "Market_Id", nullable = false)
     public int getMarketId() {
@@ -51,6 +55,7 @@ public class CurrencyMarketPrice {
         this.marketId = marketId;
     }
 
+
     @Column(name = "Price", nullable = false, precision = 0)
     public int getPrice() {
         return price;
@@ -59,6 +64,7 @@ public class CurrencyMarketPrice {
     public void setPrice(int price) {
         this.price = price;
     }
+
 
     @Column(name = "Update_Time", nullable = false)
     public Timestamp getUpdateTime() {

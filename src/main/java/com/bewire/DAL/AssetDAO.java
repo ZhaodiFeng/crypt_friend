@@ -6,6 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface AssetDAO extends CrudRepository<Asset,Long> {
+public interface AssetDAO extends CrudRepository<Asset,Integer> {
     public List<Asset> findAllByWalletId(int id);
 }

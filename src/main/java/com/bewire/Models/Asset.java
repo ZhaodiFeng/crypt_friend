@@ -1,17 +1,18 @@
 package com.bewire.Models;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
-@IdClass(AssetPK.class)
 public class Asset {
     private int id;
     private int walletId;
     private int currencyId;
-    private int amount;
+    private BigDecimal amount;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "Id", nullable = false)
     public int getId() {
         return id;
@@ -20,6 +21,7 @@ public class Asset {
     public void setId(int id) {
         this.id = id;
     }
+
 
     @Column(name = "Wallet_Id", nullable = false)
     public int getWalletId() {
@@ -30,7 +32,7 @@ public class Asset {
         this.walletId = walletId;
     }
 
-    @Id
+
     @Column(name = "Currency_Id", nullable = false)
     public int getCurrencyId() {
         return currencyId;
@@ -40,12 +42,13 @@ public class Asset {
         this.currencyId = currencyId;
     }
 
-    @Column(name = "Amount", nullable = false, precision = 0)
-    public int getAmount() {
+
+    @Column(name = "Amount", nullable = false)
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

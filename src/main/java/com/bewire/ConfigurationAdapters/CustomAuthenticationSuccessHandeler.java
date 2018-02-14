@@ -1,7 +1,10 @@
 package com.bewire.ConfigurationAdapters;
 
+import com.bewire.DAL.RoleDAO;
 import com.bewire.DAL.UserDAO;
+import com.bewire.DAL.UserRoleDAO;
 import com.bewire.Models.User;
+import com.bewire.Models.UserRole;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -14,13 +17,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Map;
 
 @Component
 public class CustomAuthenticationSuccessHandeler extends
         SavedRequestAwareAuthenticationSuccessHandler {
     @Autowired
     private UserDAO userDAO;
-
+    @Autowired
+    private UserRoleDAO userRoleDAO;
+    @Autowired
+    private RoleDAO roleDAO;
 
     /**
      * Na inloggen, update huidige tijdstamp als lastBezoek
@@ -39,20 +46,22 @@ public class CustomAuthenticationSuccessHandeler extends
         super.onAuthenticationSuccess(request, response, authentication);
         //Now add your custom logic to update database
         OAuth2Authentication auth=(OAuth2Authentication)authentication;
-        String[] details= new ObjectMapper().writeValueAsString(auth.getUserAuthentication().getDetails())
-                .replace("\"","").split(",");
-        String id= Arrays.stream(details).filter(s -> s.contains("sub"))
-                .findFirst().get().split(":")[1];
-        String name= Arrays.stream(details).filter(s -> s.contains("name"))
-                .findFirst().get().split(":")[1];
-        String email= Arrays.stream(details).filter(s -> s.contains("email"))
-                .findFirst().get().split(":")[1];
+        Map<String,Object> map= (Map<String, Object>) auth.getUserAuthentication().getDetails();
+        String id=(String)map.get("sub");
+        String name=(String)map.get("name");
+        String email=(String)map.get("email");
+
         if (!userDAO.existsById(id)){
             User user=new User();
             user.setId(id);
             user.setName(name);
             user.setMailAdres(email);
             userDAO.save(user);
+
+            UserRole userRole=new UserRole();
+            userRole.setRoleId(roleDAO.findRoleByName("User").getId());
+            userRole.setUserId(id);
+            userRoleDAO.save(userRole);
         }
     }
 }

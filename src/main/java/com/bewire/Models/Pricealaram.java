@@ -16,6 +16,7 @@ public class PriceAlaram {
     private Timestamp expirationTime;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "Id", nullable = false)
     public int getId() {
         return id;
@@ -24,7 +25,8 @@ public class PriceAlaram {
     public void setId(int id) {
         this.id = id;
     }
-    
+
+
     @Column(name = "User_Id", nullable = false, length = 21)
     public String getUserId() {
         return userId;
@@ -33,6 +35,7 @@ public class PriceAlaram {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
 
     @Column(name = "Sale_Currency_Id", nullable = false)
     public int getSaleCurrencyId() {
@@ -43,6 +46,7 @@ public class PriceAlaram {
         this.saleCurrencyId = saleCurrencyId;
     }
 
+
     @Column(name = "Buy_Currency_Id", nullable = false)
     public int getBuyCurrencyId() {
         return buyCurrencyId;
@@ -51,6 +55,7 @@ public class PriceAlaram {
     public void setBuyCurrencyId(int buyCurrencyId) {
         this.buyCurrencyId = buyCurrencyId;
     }
+
 
     @Column(name = "Market_Id", nullable = false)
     public int getMarketId() {
@@ -61,6 +66,7 @@ public class PriceAlaram {
         this.marketId = marketId;
     }
 
+
     @Column(name = "Price", nullable = false, precision = 0)
     public int getPrice() {
         return price;
@@ -69,6 +75,7 @@ public class PriceAlaram {
     public void setPrice(int price) {
         this.price = price;
     }
+
 
     @Column(name = "Expiration_Time", nullable = false)
     public Timestamp getExpirationTime() {

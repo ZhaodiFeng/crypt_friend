@@ -1,9 +1,6 @@
 package com.bewire.Models;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -22,6 +19,7 @@ public class User {
         this.id = id;
     }
 
+
     @Column(name = "Name", nullable = false, length = 255)
     public String getName() {
         return name;
@@ -30,6 +28,7 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
+
 
     @Column(name = "Mail_Adres", nullable = false, length = 255)
     public String getMailAdres() {

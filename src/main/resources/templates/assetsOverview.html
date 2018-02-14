@@ -4,14 +4,16 @@
     <title>Your Assets</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/bootstrap-reboot.css}"/>
+    <link rel="stylesheet" th:href="@{/css/sortableTabel.css}"/>
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.tablesorter.js}"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.bundle.js"></script>
 </head>
 <body>
 <div class="container">
     <div th:replace="header :: header"></div>
-    <table class="table">
+    <table id="assetsTable" class="table tablesorter">
         <thead class="thead-dark">
         <tr>
             <th scope="col">#</th>
@@ -26,7 +28,7 @@
                 <tr>
                     <th scope="row" th:text="${iter2.index}+1">1</th>
                     <td th:text="${asset.asset.amount}">...</td>
-                    <td th:text="${asset.currencyName}">...</td>
+                    <td th:text="${asset.currency.name}">...</td>
                     <td th:text="${wallet.wallet.name}"></td>
                 </tr>
             </th:block>
@@ -35,4 +37,13 @@
     </table>
 </div>
 </body>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(document).ready(function()
+        {
+            $("#assetsTable").tablesorter();
+        }
+    );
+    /*]]>*/
+</script>
 </html>

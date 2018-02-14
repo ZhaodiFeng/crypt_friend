@@ -1,0 +1,12 @@
+th.header {
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+
+th.headerSortUp {
+    background-image: url(../img/sort_down_green.png);
+}
+
+th.headerSortDown {
+    background-image: url(../img/sort_up_green.png);
+}

@@ -4,10 +4,10 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Currency {
+public class Exchange {
     private int id;
     private String name;
-    private String symbol;
+    private String url;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,7 +21,7 @@ public class Currency {
     }
 
 
-    @Column(name = "Name", nullable = false, length = 255)
+    @Column(name = "Name", nullable = false, length = 50)
     public String getName() {
         return name;
     }
@@ -31,28 +31,28 @@ public class Currency {
     }
 
 
-    @Column(name = "Symbol", nullable = true, length = 255)
-    public String getSymbol() {
-        return symbol;
+    @Column(name = "Url", nullable = true, length = 255)
+    public String getUrl() {
+        return url;
     }
 
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Currency currency = (Currency) o;
-        return id == currency.id &&
-                Objects.equals(name, currency.name) &&
-                Objects.equals(symbol, currency.symbol);
+        Exchange exchange = (Exchange) o;
+        return id == exchange.id &&
+                Objects.equals(name, exchange.name) &&
+                Objects.equals(url, exchange.url);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, name, symbol);
+        return Objects.hash(id, name, url);
     }
 }

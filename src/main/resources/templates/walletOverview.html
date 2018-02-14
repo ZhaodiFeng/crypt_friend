@@ -1,46 +1,44 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <title>Currencies</title>
+    <title th:text="${wallet.wallet.name}">Wallet</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/bootstrap-reboot.css}"/>
     <link rel="stylesheet" th:href="@{/css/sortableTabel.css}"/>
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" th:src="@{/js/jquery.tablesorter.js}"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.bundle.js"></script>
 </head>
 <body>
 <div class="container">
     <div th:replace="header :: header"></div>
-    <table id="currenciesTable" class="table tablesorter">
+    <h2 th:text="${wallet.wallet.name}">Wallet</h2>
+    <table id="assetsTable" class="table tablesorter">
         <thead class="thead-dark">
         <tr>
             <th scope="col">#</th>
+            <th scope="col">Amount</th>
             <th scope="col">Currency</th>
-            <th scope="col">Symbol</th>
         </tr>
         </thead>
         <tbody>
-            <th:block th:each="currency,iter: ${currencies}">
-                <tr>
-                    <th scope="row" th:text="${iter.index}+1">1</th>
-                    <td>
-                        <a th:text="${currency.name}" th:href="@{/data/currency/} + ${currency.name}"></a>
-                    </td>
-                    <td th:text="${currency.symbol}">...</td>
-                </tr>
-            </th:block>
+        <th:block th:each="asset,iter: ${wallet.assets}">
+            <tr>
+                <th scope="row" th:text="${iter.index}+1">1</th>
+                <td th:text="${asset.asset.amount}">...</td>
+                <td th:text="${asset.currency.name}">...</td>
+            </tr>
+        </th:block>
         </tbody>
     </table>
 </div>
 </body>
 <script th:inline="javascript">
     /*<![CDATA[*/
-
     $(document).ready(function()
         {
-            $("#currenciesTable").tablesorter();
+            $("#assetsTable").tablesorter();
         }
     );
     /*]]>*/

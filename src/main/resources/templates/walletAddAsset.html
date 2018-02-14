@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title th:text="${wallet.name}+'AddAssets'">Wallet</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap-reboot.css}"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" th:href="@{/css/chosen.min.css}"/>
+    <script type="text/javascript" src="/js/chosen.jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div th:replace="header :: header"></div>
+    <h2 th:text="${wallet.name}">Wallet</h2>
+    <form th:action="@{/asset}" th:object="${asset}" method="post">
+        <input type="number" th:field="*{walletId}" hidden="hidden" required="required" readonly="readonly"/>
+        <p>Currency:
+            <select th:field="*{currencyId}" type="number" class="chosen-select" required="required">
+                <option value="-1">In Progressing</option>
+            </select>
+        </p>
+        <p>Amount: <input type="number" th:field="*{amount}" required="required"/></p>
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    </form>
+</div>
+</body>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(".chosen-select").chosen()
+
+    var topCurrencies;
+    var currencies;
+
+    var addOptions=function (data) {
+        var options="";
+        for (var i=0;i<data.length;i++){
+            options+="<option value='"+data[i].id+"'>"+data[i].name+"</option>"
+        }
+        $("#currencyId").html(options);
+        $("#currencyId").trigger("chosen:updated");
+            }
+
+    var getCurrencies=function (url,callback){
+        $.get( url, function( data ) {
+            currencies=data;
+            callback();
+        });
+    }
+    
+    $("#currencyId").ready(
+        function () {
+            getCurrencies("/data/currency/top/10"
+            ,function () {
+                    topCurrencies=currencies;
+                    addOptions(currencies);
+                })
+        });
+
+    var addSearchTrigger=function () {
+         var key=$(".chosen-search-input")[0].value;
+         getCurrencies("/data/currency/filter/"+key
+         ,function(){
+             if(key=$(".chosen-search-input")[0].value)
+                 addOptions(currencies)});
+    }
+
+    //$(".chosen-search-input")[0].onkeyup=addSearchTrigger;
+    /*]]>*/
+</script>
+</html>

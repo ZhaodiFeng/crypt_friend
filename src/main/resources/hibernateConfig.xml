@@ -28,6 +28,10 @@
       <mapping class="com.bewire.Models.CurrencyMarketPrice"/>
       <mapping class="com.bewire.Models.PriceAlaram"/>
       <mapping class="com.bewire.Models.Wallet"/>
+      <mapping class="com.bewire.Models.Exchange"/>
+      <mapping class="com.bewire.Models.Role"/>
+      <mapping class="com.bewire.Models.TransactionType"/>
+      <mapping class="com.bewire.Models.UserRole"/>
       <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
 

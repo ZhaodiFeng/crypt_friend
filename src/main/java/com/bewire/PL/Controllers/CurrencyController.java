@@ -13,26 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/currency")
 public class CurrencyController {
     @Autowired
-    private IMarketApiBLL bittrexCurrencyBLL;
-    @Autowired
     private CurrencyBLL currencyBLL;
-    @Autowired
-    private IMarketApiBLL marketApiBLL;
 
-    @RequestMapping("/")
+    @RequestMapping("")
     public String getCurrenciesList(Model model){
         model.addAttribute("currencies",currencyBLL.getCurrenciesList());
         return "currenciesList";
     }
 
-    @RequestMapping("/update")
-    public String updateCurrenciesList() throws IOException {
-        marketApiBLL.UpdateCurrenciesList();
-        return "redirect:/currency";
-    }
+
 
 }

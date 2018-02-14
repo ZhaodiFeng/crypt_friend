@@ -1,9 +1,6 @@
 package com.bewire.Models;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -13,6 +10,7 @@ public class Market {
     private Integer apiAdres;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "Id", nullable = false)
     public int getId() {
         return id;
@@ -22,6 +20,7 @@ public class Market {
         this.id = id;
     }
 
+
     @Column(name = "Name", nullable = false, length = 255)
     public String getName() {
         return name;
@@ -30,6 +29,7 @@ public class Market {
     public void setName(String name) {
         this.name = name;
     }
+
 
     @Column(name = "Api_Adres", nullable = true)
     public Integer getApiAdres() {

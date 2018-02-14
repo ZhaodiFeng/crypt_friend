@@ -17,4 +17,24 @@ public class CurrencyBLL implements  ICurrencyBLL {
     public List<Currency> getCurrenciesList(){
         return currencyDAO.getAllByIdIsNotNull();
     }
+
+    @Override
+    public Currency getCurrencyByName(String name) {
+        return currencyDAO.findCurrencyByName(name);
+    }
+
+    @Override
+    public List<Currency> filterCurrencyByKey(String key) {
+        return currencyDAO.findAllByNameContainingIgnoreCaseOrSymbolContainingIgnoreCase(key,key);
+    }
+
+    @Override
+    public List<Currency> getTopCurrencies(int nummber) {
+        List<Currency> currencies=currencyDAO.getAllByIdIsNotNull();
+        if(nummber>currencies.size())
+            return currencies;
+        else
+            return currencies.subList(0,nummber-1);
+    }
+
 }

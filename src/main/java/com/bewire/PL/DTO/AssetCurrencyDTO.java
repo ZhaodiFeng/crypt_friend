@@ -1,22 +1,23 @@
 package com.bewire.PL.DTO;
 
 import com.bewire.Models.Asset;
+import com.bewire.Models.Currency;
 
 public class AssetCurrencyDTO {
-    private String currencyName;
+    private Currency currency;
     private Asset asset;
 
-    public AssetCurrencyDTO(String currencyName, Asset asset) {
-        this.currencyName = currencyName;
+    public AssetCurrencyDTO(Currency currencyName, Asset asset) {
+        this.currency = currencyName;
         this.asset = asset;
     }
 
-    public String getCurrencyName() {
-        return currencyName;
+    public Currency getCurrency() {
+        return currency;
     }
 
-    public void setCurrencyName(String currencyName) {
-        this.currencyName = currencyName;
+    public void setCurrency(Currency currencyName) {
+        this.currency = currencyName;
     }
 
     public Asset getAsset() {
