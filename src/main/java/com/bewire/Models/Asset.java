@@ -1,7 +1,9 @@
 package com.bewire.Models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Objects;
 
 @Entity
@@ -42,8 +44,7 @@ public class Asset {
         this.currencyId = currencyId;
     }
 
-
-    @Column(name = "Amount", nullable = false)
+    @Column(name = "Amount", nullable = false,scale = 4)
     public BigDecimal getAmount() {
         return amount;
     }

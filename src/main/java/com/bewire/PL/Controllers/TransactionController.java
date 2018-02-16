@@ -26,7 +26,7 @@ public class TransactionController {
     public String postTransaction(@ModelAttribute Transaction transaction, Principal principal){
         if(authenticationBLL.authenticateTransaction(transaction,principal)){
             transactionBLL.procesTransaction(transaction);
-            return "redirect:/assets";
+            return "redirect:/asset";
         }
         else
             return "redirect:/";

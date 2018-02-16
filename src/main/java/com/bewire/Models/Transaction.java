@@ -7,7 +7,6 @@ import java.util.Objects;
 @Entity
 public class Transaction {
     private int id;
-    private String userId;
     private int transactionTypeId;
     private int marketId;
     private int fee;
@@ -25,16 +24,6 @@ public class Transaction {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-
-    @Column(name = "User_Id", nullable = false, length = 21)
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
 
@@ -58,7 +47,7 @@ public class Transaction {
     }
 
 
-    @Column(name = "Fee", nullable = true, precision = 0)
+    @Column(name = "Fee", nullable = true, precision = 15,scale = 4)
     public int getFee() {
         return fee;
     }
@@ -78,7 +67,7 @@ public class Transaction {
     }
 
 
-    @Column(name = "Sale_Asset_Id", nullable = true)
+    @Column(name = "Pay_Asset_Id", nullable = true)
     public int getPayAssetId() {
         return payAssetId;
     }
@@ -88,7 +77,7 @@ public class Transaction {
     }
 
 
-    @Column(name = "Buy_Amount", nullable = true, precision = 0)
+    @Column(name = "Buy_Amount", nullable = true, precision = 15,scale = 4)
     public BigDecimal getBuyAmount() {
         return buyAmount;
     }
@@ -98,7 +87,7 @@ public class Transaction {
     }
 
 
-    @Column(name = "Sale_Amount", nullable = true, precision = 0)
+    @Column(name = "Pay_Amount", nullable = true, precision = 15,scale = 4)
     public BigDecimal getPayAmount() {
         return payAmount;
     }
@@ -115,7 +104,6 @@ public class Transaction {
         return id == that.id &&
                 transactionTypeId == that.transactionTypeId &&
                 fee == that.fee &&
-                Objects.equals(userId, that.userId) &&
                 Objects.equals(buyAssetId, that.buyAssetId) &&
                 Objects.equals(payAssetId, that.payAssetId) &&
                 Objects.equals(buyAmount, that.buyAmount) &&
@@ -125,6 +113,6 @@ public class Transaction {
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, userId, transactionTypeId, marketId, fee, buyAssetId, payAssetId, buyAmount, payAmount);
+        return Objects.hash(id, transactionTypeId, marketId, fee, buyAssetId, payAssetId, buyAmount, payAmount);
     }
 }

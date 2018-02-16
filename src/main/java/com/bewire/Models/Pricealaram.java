@@ -5,12 +5,10 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "price_alaram", schema = "crypt_friend", catalog = "")
+@Table(name = "price_alaram", schema = "crypt_friend")
 public class PriceAlaram {
     private int id;
     private String userId;
-    private int saleCurrencyId;
-    private int buyCurrencyId;
     private int marketId;
     private int price;
     private Timestamp expirationTime;
@@ -37,26 +35,6 @@ public class PriceAlaram {
     }
 
 
-    @Column(name = "Sale_Currency_Id", nullable = false)
-    public int getSaleCurrencyId() {
-        return saleCurrencyId;
-    }
-
-    public void setSaleCurrencyId(int saleCurrencyId) {
-        this.saleCurrencyId = saleCurrencyId;
-    }
-
-
-    @Column(name = "Buy_Currency_Id", nullable = false)
-    public int getBuyCurrencyId() {
-        return buyCurrencyId;
-    }
-
-    public void setBuyCurrencyId(int buyCurrencyId) {
-        this.buyCurrencyId = buyCurrencyId;
-    }
-
-
     @Column(name = "Market_Id", nullable = false)
     public int getMarketId() {
         return marketId;
@@ -67,7 +45,7 @@ public class PriceAlaram {
     }
 
 
-    @Column(name = "Price", nullable = false, precision = 0)
+    @Column(name = "Price", nullable = false,precision = 15,scale = 4)
     public int getPrice() {
         return price;
     }
@@ -92,8 +70,6 @@ public class PriceAlaram {
         if (o == null || getClass() != o.getClass()) return false;
         PriceAlaram that = (PriceAlaram) o;
         return id == that.id &&
-                saleCurrencyId == that.saleCurrencyId &&
-                buyCurrencyId == that.buyCurrencyId &&
                 marketId == that.marketId &&
                 price == that.price &&
                 Objects.equals(userId, that.userId) &&
@@ -103,6 +79,6 @@ public class PriceAlaram {
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, userId, saleCurrencyId, buyCurrencyId, marketId, price, expirationTime);
+        return Objects.hash(id, userId, marketId, price, expirationTime);
     }
 }

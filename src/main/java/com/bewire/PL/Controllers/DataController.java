@@ -1,8 +1,11 @@
 package com.bewire.PL.Controllers;
 
 import com.bewire.BLL.CurrencyBLL;
+import com.bewire.BLL.MarketBLL;
 import com.bewire.BLL.UserAssetsBLL;
 import com.bewire.Models.Currency;
+import com.bewire.Models.Market;
+import com.bewire.PL.DTO.CurrencyFilterJSONDTO;
 import com.bewire.PL.DTO.UserWalletsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -24,9 +27,25 @@ public class DataController {
     @Autowired
     private UserAssetsBLL userAssetsBLL;
 
+    @Autowired
+    private MarketBLL marketBLL;
+
+    @GetMapping("market/buy/{currencyId}")
+    public List<Market> getBuyMarketsForCurrency(@PathVariable("currencyId")int id){
+        return marketBLL.getAllBuyMarketByCurrencyId(id);
+    }
+
+    @GetMapping("market/pay/{currencyId}")
+    public List<Market> getPayMarketsForCurrency(@PathVariable("currencyId")int id){
+        return marketBLL.getAllPayMarketByCurrencyId(id);
+    }
+
     @GetMapping("currency/all")
-    public List<Currency> getAllCurrencies(){
-        return currencyBLL.getCurrenciesList();
+    public CurrencyFilterJSONDTO getAllCurrencies(){
+        CurrencyFilterJSONDTO dto=new CurrencyFilterJSONDTO();
+        dto.setQuery("all");
+        dto.setSuggestions(currencyBLL.getCurrenciesList());
+        return dto;
     }
 
     @GetMapping("currency/{name}")
@@ -35,13 +54,19 @@ public class DataController {
     }
 
     @GetMapping("currency/filter/{key}")
-    public List<Currency> getMatchedCurreny(@PathVariable("key")String key){
-        return currencyBLL.filterCurrencyByKey(key);
+    public CurrencyFilterJSONDTO  getMatchedCurreny(@PathVariable("key")String key){
+        CurrencyFilterJSONDTO dto=new CurrencyFilterJSONDTO();
+        dto.setQuery(key);
+        dto.setSuggestions(currencyBLL.filterCurrencyByKey(key));
+        return dto;
     }
 
     @GetMapping("currency/top/{number}")
-    public List<Currency> getTopCurrencies(@PathVariable("number")int number){
-        return currencyBLL.getTopCurrencies(number);
+    public CurrencyFilterJSONDTO  getTopCurrencies(@PathVariable("number")int number){
+        CurrencyFilterJSONDTO dto=new CurrencyFilterJSONDTO();
+        dto.setQuery("Top"+number);
+        dto.setSuggestions(currencyBLL.getTopCurrencies(number));
+        return dto;
     }
 
     @RequestMapping("assets")

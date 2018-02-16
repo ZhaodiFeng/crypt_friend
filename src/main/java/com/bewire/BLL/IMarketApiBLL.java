@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface IMarketApiBLL {
     void UpdateCurrenciesList() throws IOException;
+
+    void UpdateMarketsList() throws IOException;
 }

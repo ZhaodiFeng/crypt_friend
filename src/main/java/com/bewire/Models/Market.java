@@ -1,6 +1,7 @@
 package com.bewire.Models;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
@@ -8,6 +9,9 @@ public class Market {
     private int id;
     private String name;
     private Integer apiAdres;
+    private int buyCurrencyId;
+    private int payCurrencyId;
+    private int exchangeId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,6 +24,32 @@ public class Market {
         this.id = id;
     }
 
+    @Column(name = "Buy_Currency_Id",nullable = false)
+    public int getBuyCurrencyId() {
+        return buyCurrencyId;
+    }
+
+    public void setBuyCurrencyId(int buyCurrencyId) {
+        this.buyCurrencyId = buyCurrencyId;
+    }
+
+    @Column(name ="Pay_Currency_Id",nullable = false)
+    public int getPayCurrencyId() {
+        return payCurrencyId;
+    }
+
+    public void setPayCurrencyId(int payCurrencyId) {
+        this.payCurrencyId = payCurrencyId;
+    }
+
+    @Column(name = "Exchange_Id")
+    public int getExchangeId() {
+        return exchangeId;
+    }
+
+    public void setExchangeId(int exchangeId) {
+        this.exchangeId = exchangeId;
+    }
 
     @Column(name = "Name", nullable = false, length = 255)
     public String getName() {
@@ -46,13 +76,16 @@ public class Market {
         if (o == null || getClass() != o.getClass()) return false;
         Market market = (Market) o;
         return id == market.id &&
+                Objects.equals(payCurrencyId,market.payCurrencyId)&&
+                Objects.equals(buyCurrencyId,market.buyCurrencyId)&&
                 Objects.equals(name, market.name) &&
+                Objects.equals(exchangeId,market.exchangeId)&&
                 Objects.equals(apiAdres, market.apiAdres);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, name, apiAdres);
+        return Objects.hash(id, name, apiAdres,buyCurrencyId,payCurrencyId,exchangeId);
     }
 }

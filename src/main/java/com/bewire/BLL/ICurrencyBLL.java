@@ -9,4 +9,5 @@ public interface ICurrencyBLL {
     Currency getCurrencyByName(String name);
     List<Currency> filterCurrencyByKey(String key);
     List<Currency> getTopCurrencies(int number);
+    Currency getCurrencyById(int id);
 }

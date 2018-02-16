@@ -37,4 +37,9 @@ public class CurrencyBLL implements  ICurrencyBLL {
             return currencies.subList(0,nummber-1);
     }
 
+    @Override
+    public Currency getCurrencyById(int id) {
+        return currencyDAO.findOne(id);
+    }
+
 }

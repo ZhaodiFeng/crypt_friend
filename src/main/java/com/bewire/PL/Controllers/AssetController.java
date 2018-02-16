@@ -37,7 +37,7 @@ public class AssetController {
         String userId= UserDetailTool.getUserId(principal);
         if(authenticationBLL.authenticateWallet(asset.getWalletId(),userId)){
             assetBLL.addAsset(asset);
-            return "/asset";
+            return "redirect:/asset";
         }
         else
             return "redirect:/403";

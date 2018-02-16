@@ -22,9 +22,9 @@ public class TransactionBLL implements ITransactionBLL {
     @Transactional
     public void procesTransaction(Transaction transaction) {
         int transactionId=transaction.getTransactionTypeId();
-        if(transactionId==transactionTypeDAO.findFirstByName("Init"))
+        if(transactionId==transactionTypeDAO.findFirstByName("Init").getId())
             procesInit(transaction);
-        if (transactionId==transactionTypeDAO.findFirstByName("Trade"))
+        if (transactionId==transactionTypeDAO.findFirstByName("Trade").getId())
             procesTrade(transaction);
     }
 
@@ -37,9 +37,13 @@ public class TransactionBLL implements ITransactionBLL {
     private void procesTrade(Transaction transaction){
         Asset pay=assetDAO.findOne(transaction.getPayAssetId());
         Asset buy=assetDAO.findOne(transaction.getBuyAssetId());
-        pay.setAmount(pay.getAmount().min(transaction.getPayAmount()));
+        pay.setAmount(pay.getAmount().add(transaction.getPayAmount().negate()));
         buy.setAmount(buy.getAmount().add(transaction.getBuyAmount()));
         assetDAO.save(pay);
         assetDAO.save(buy);
+
+        Transaction record=new Transaction();
+        transaction.setId(record.getId());
+        transactionDAO.save(transaction);
     }
 }

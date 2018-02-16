@@ -27,7 +27,7 @@
             <tr>
                 <th scope="row" th:text="${iter.index}+1">1</th>
                 <td th:text="${asset.asset.amount}">...</td>
-                <td th:text="${asset.currency.name}">...</td>
+                <td><a th:text="${asset.currency.name}" th:href="@{/currency/}+${asset.currency.id}"></a></td>
             </tr>
         </th:block>
         </tbody>

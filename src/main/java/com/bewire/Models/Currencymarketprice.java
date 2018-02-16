@@ -1,17 +1,16 @@
 package com.bewire.Models;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "currency_market_price", schema = "crypt_friend", catalog = "")
+@Table(name = "currency_market_price", schema = "crypt_friend")
 public class CurrencyMarketPrice {
     private int id;
-    private int saleCurrencyId;
-    private int buyCurrencyId;
     private int marketId;
-    private int price;
+    private BigDecimal price;
     private Timestamp updateTime;
 
     @Id
@@ -25,27 +24,6 @@ public class CurrencyMarketPrice {
         this.id = id;
     }
 
-
-    @Column(name = "Sale_Currency_Id", nullable = false)
-    public int getSaleCurrencyId() {
-        return saleCurrencyId;
-    }
-
-    public void setSaleCurrencyId(int saleCurrencyId) {
-        this.saleCurrencyId = saleCurrencyId;
-    }
-
-
-    @Column(name = "Buy_Currency_Id", nullable = false)
-    public int getBuyCurrencyId() {
-        return buyCurrencyId;
-    }
-
-    public void setBuyCurrencyId(int buyCurrencyId) {
-        this.buyCurrencyId = buyCurrencyId;
-    }
-
-
     @Column(name = "Market_Id", nullable = false)
     public int getMarketId() {
         return marketId;
@@ -56,12 +34,12 @@ public class CurrencyMarketPrice {
     }
 
 
-    @Column(name = "Price", nullable = false, precision = 0)
-    public int getPrice() {
+    @Column(name = "Price", nullable = false, precision = 15,scale = 4)
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -81,8 +59,6 @@ public class CurrencyMarketPrice {
         if (o == null || getClass() != o.getClass()) return false;
         CurrencyMarketPrice that = (CurrencyMarketPrice) o;
         return id == that.id &&
-                saleCurrencyId == that.saleCurrencyId &&
-                buyCurrencyId == that.buyCurrencyId &&
                 marketId == that.marketId &&
                 price == that.price &&
                 Objects.equals(updateTime, that.updateTime);
@@ -91,6 +67,6 @@ public class CurrencyMarketPrice {
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, saleCurrencyId, buyCurrencyId, marketId, price, updateTime);
+        return Objects.hash(id, marketId, price, updateTime);
     }
 }

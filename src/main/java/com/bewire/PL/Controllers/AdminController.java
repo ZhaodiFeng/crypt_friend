@@ -14,9 +14,22 @@ public class AdminController {
     @Autowired
     private IMarketApiBLL marketApiBLL;
 
-    @RequestMapping("update")
+    @RequestMapping("/currency/update")
     public String updateCurrenciesList() throws IOException {
         marketApiBLL.UpdateCurrenciesList();
+        return "redirect:/currency";
+    }
+
+    @RequestMapping("/markets/update")
+    public String updateMarketsList() throws IOException {
+        marketApiBLL.UpdateMarketsList();
+        return "redirect:/currency";
+    }
+
+    @RequestMapping("/api/update")
+    public String updateApi() throws IOException {
+        marketApiBLL.UpdateCurrenciesList();
+        marketApiBLL.UpdateMarketsList();
         return "redirect:/currency";
     }
 

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>Your Assets</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap-reboot.css}"/>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.bundle.js"></script>
+</head>
+<body>
+<div class="container">
+    <div th:replace="header :: header"></div>
+    <h2 th:text="${currency.id}"></h2>
+    <h2 th:text="${currency.name}"></h2>
+    <h2 th:text="${currency.symbol}"></h2>
+    <form id="tradeForm" th:action="@{/transaction}" th:object="${transaction}" method="post">
+        <p>Action:<input type="text" th:field="*{transactionTypeId}"/></p>
+        <p>Market:<input type="text" th:field="*{marketId}"/></p>
+        <p>Fee:<input type="number" th:field="*{fee}"/></p>
+        <p>Get:<input type="text" th:field="*{buyAssetId}"/></p>
+        <p>Pay:<input type="text" th:field="*{payAssetId}"/></p>
+        <p>Get Amount:<input type="number" th:field="*{buyAmount}"/></p>
+        <p>Pay Amount:<input type="number" th:field="*{payAmount}"/></p>
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    </form>
+</div>
+</body>
+</html>

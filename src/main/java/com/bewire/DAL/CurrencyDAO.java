@@ -13,4 +13,5 @@ public interface CurrencyDAO extends CrudRepository<Currency,Integer> {
     public Currency findCurrencyById(int id);
     public Currency findCurrencyByName(String name);
     public List<Currency> findAllByNameContainingIgnoreCaseOrSymbolContainingIgnoreCase(String key1,String key2);
+    public Currency findCurrencyBySymbol(String symbol);
 }
