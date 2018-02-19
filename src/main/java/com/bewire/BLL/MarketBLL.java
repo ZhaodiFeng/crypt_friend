@@ -21,4 +21,14 @@ public class MarketBLL implements IMarketBLL {
     public List<Market> getAllBuyMarketByCurrencyId(int id) {
         return marketDAO.findAllByBuyCurrencyId(id);
     }
+
+    @Override
+    public List<Market> getAllByExchangeIdAndAndBuyCurrencyId(int exchangeId, int currencyId) {
+        return marketDAO.getAllByExchangeIdAndAndBuyCurrencyId(exchangeId, currencyId);
+    }
+
+    @Override
+    public List<Market> getAllByExchangeIdAndAndPayCurrencyId(int exchangeId, int currencyId) {
+        return marketDAO.getAllByExchangeIdAndAndPayCurrencyId(exchangeId,currencyId);
+    }
 }

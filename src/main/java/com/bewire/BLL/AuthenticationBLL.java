@@ -7,6 +7,7 @@ import com.bewire.Models.Asset;
 import com.bewire.Models.Transaction;
 import com.bewire.Models.TransactionType;
 import com.bewire.Models.Wallet;
+import com.bewire.PL.DTO.TransactionDTO;
 import com.bewire.Utilities.UserDetailTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -25,18 +26,9 @@ public class AuthenticationBLL implements  IAuthenticationBLL {
     private AssetDAO assetDAO;
 
     @Override
-    public boolean authenticateTransaction(Transaction transaction, Principal principal) {
-        TransactionType transactionType=transactionTypeDAO.findOne( transaction.getTransactionTypeId());
+    public boolean authenticateTransaction(TransactionDTO transaction, Principal principal) {
         String sub= UserDetailTool.getUserId(principal);
-
-        if (transactionType.getName().equals("Init")){
-           return authenticateAsset(transaction.getBuyAssetId(),sub);
-        }
-        if (transactionType.getName().equals("Trade")){
-            return authenticateAsset(transaction.getBuyAssetId(),sub)
-                    &&authenticateAsset(transaction.getPayAssetId(),sub);
-        }
-        return false;
+        return authenticateWallet(transaction.getWalletId(),sub);
     }
 
     @Override

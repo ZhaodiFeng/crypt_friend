@@ -22,7 +22,13 @@
 
                         <a class="nav-item nav-link active" th:href="@{/asset}">Assets</a>
 
+                        <a class="nav-item nav-link active" th:href="@{/wallet}">Wallets</a>
+
                         <a class="nav-item nav-link active" th:href="@{/currency}">Currency</a>
+
+                        <a class="nav-item nav-link active" th:href="@{/transaction}">Transaction</a>
+
+
                     </div>
                     <div class="nav navbar-nav navbar-right ml-auto justify-content-end">
                             <a sec:authorize="isAuthenticated()" class="nav-item nav-link active pr-2" sec:authentication="name" th:href="@{/user}"></a>

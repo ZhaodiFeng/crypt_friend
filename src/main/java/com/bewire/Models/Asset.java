@@ -7,11 +7,22 @@ import java.text.DecimalFormat;
 import java.util.Objects;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"wallet_id","currency_id"}))
 public class Asset {
     private int id;
     private int walletId;
     private int currencyId;
     private BigDecimal amount;
+
+    public Asset() {
+        amount=new BigDecimal(0);
+    }
+
+    public Asset(int walletId,int currencyId){
+        this();
+        setWalletId(walletId);
+        setCurrencyId(currencyId);
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -10,17 +10,20 @@
 <body>
 <div class="container">
     <div th:replace="header :: header"></div>
-    <h2 th:text="${currency.id}"></h2>
-    <h2 th:text="${currency.name}"></h2>
-    <h2 th:text="${currency.symbol}"></h2>
+    <h2 th:text="${currency.name}+' - '+${currency.symbol}"></h2>
     <form id="tradeForm" th:action="@{/transaction}" th:object="${transaction}" method="post">
-        <p>Action:<input type="text" th:field="*{transactionTypeId}"/></p>
+        <input type="text" th:id="transactionTypeId" th:name="transactionTypeId" th:value="1" th:hidden="hidden"/>
         <p>Market:<input type="text" th:field="*{marketId}"/></p>
         <p>Fee:<input type="number" th:field="*{fee}"/></p>
-        <p>Get:<input type="text" th:field="*{buyAssetId}"/></p>
-        <p>Pay:<input type="text" th:field="*{payAssetId}"/></p>
-        <p>Get Amount:<input type="number" th:field="*{buyAmount}"/></p>
-        <p>Pay Amount:<input type="number" th:field="*{payAmount}"/></p>
+        <p>Pay:<input type="number" th:field="*{payAmount}" placeholder="amount to pay"/>
+            <a th:text="${currency.name}+' - '+${currency.symbol}"></a>
+            <a> from </a>
+            <input type="text" th:field="*{payAssetId}" placeholder="asset to pay"/>
+        </p>
+        <p>Recieve:
+            <input type="number" th:field="*{buyAmount}"/>
+            <a> to </a>
+            <input type="text" th:field="*{buyAssetId}" placeholder="asset to recieve"/></p>
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>
 </div>

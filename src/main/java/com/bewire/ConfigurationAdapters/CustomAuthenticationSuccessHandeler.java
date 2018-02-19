@@ -1,10 +1,13 @@
 package com.bewire.ConfigurationAdapters;
 
+import com.bewire.BLL.WalletBLL;
+import com.bewire.DAL.ExchangeDAO;
 import com.bewire.DAL.RoleDAO;
 import com.bewire.DAL.UserDAO;
 import com.bewire.DAL.UserRoleDAO;
 import com.bewire.Models.User;
 import com.bewire.Models.UserRole;
+import com.bewire.Models.Wallet;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -28,7 +31,8 @@ public class CustomAuthenticationSuccessHandeler extends
     private UserRoleDAO userRoleDAO;
     @Autowired
     private RoleDAO roleDAO;
-
+    @Autowired
+    private WalletBLL walletBLL;
     /**
      * Na inloggen, update huidige tijdstamp als lastBezoek
      *
@@ -62,6 +66,8 @@ public class CustomAuthenticationSuccessHandeler extends
             userRole.setRoleId(roleDAO.findRoleByName("User").getId());
             userRole.setUserId(id);
             userRoleDAO.save(userRole);
+
+            walletBLL.addWallet(new Wallet(id,1));
         }
     }
 }

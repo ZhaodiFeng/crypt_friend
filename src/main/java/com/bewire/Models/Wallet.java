@@ -11,6 +11,17 @@ public class Wallet {
     private String url;
     private int exchangeId;
 
+
+    public Wallet() {
+        setName("Default portfolio");
+    }
+
+    public Wallet(String userId,int exchangeId){
+        this();
+        setUserId(userId);
+        setExchangeId(exchangeId);
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "Id", nullable = false)

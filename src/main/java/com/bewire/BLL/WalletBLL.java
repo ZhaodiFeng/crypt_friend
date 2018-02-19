@@ -40,4 +40,14 @@ public class WalletBLL implements IWalletBLL {
         return walletDAO.findOne(id);
     }
 
+    @Override
+    public void deletWallet(int id) {
+        walletDAO.delete(id);
+    }
+
+    @Override
+    public List<Wallet> getWalletsOfUser(String id) {
+        return walletDAO.findAllByUserId(id);
+    }
+
 }

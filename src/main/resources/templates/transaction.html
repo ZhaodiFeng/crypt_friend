@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>New Transacion</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap-reboot.css}"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.bundle.js"></script>
+    <script type="text/javascript" src="/js/jquery.easy-autocomplete.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/easy-autocomplete.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/formStyle.css}"/>
+</head>
+<body>
+<div class="container">
+    <div th:replace="header :: header"></div>
+    <h2>New Transaction</h2>
+    <!--/*@thymesVar id="transaction" type="com.bewire.PL.DTO.TransactionDTO"*/-->
+    <form id="transactionForm" th:action="@{/transaction}" th:object="${transaction}" method="post">
+        <p><a>Coin </a>
+            <input id="currencyFilter"/>
+            <input type="number" th:field="*{buyCurrencyId}" hidden="hidden"/></p>
+        <p>Exchange <input id="exchangesList"/><input id="exchangeId" hidden="hidden"/></p>
+        <p>Market <input id="market"/><input th:field="*{marketId}" hidden="hidden"/></p>
+        <p>Buy Sale<input type="checkbox" id="buyOrSale" value="1"/>Buy</p>
+        <p>Amount <input th:field="*{buyAmount}"/><a th:text="*{buyCurrencyId}"></a></p>
+        <p>Price <input id="price"/></p>
+        <p>Amount <input th:field="*{payAmount}"/><a th:text="*{payCurrencyId}"/></p>
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    </form>
+</div>
+</body>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var exchangeId;
+    var isBuy;
+    var currencyId;
+
+    var optionsCurrency = {
+        url: function(phrase) {
+            return "/data/currency/filter/" + phrase;
+        },
+        listLocation: "suggestions",
+        matchResponseProperty: "query",
+        getValue: "name",
+        template: {
+            type: "description",
+            fields: {
+                description: "symbol"
+            }
+        },
+        placeholder:"Chose your coin",
+        list: {
+            onChooseEvent: function() {
+                var value = $("#currencyFilter").getSelectedItemData().id;
+                currencyId=value;
+                $("#buyCurrencyId").val(currencyId);
+            }
+        }
+    };
+
+    $("#currencyFilter").easyAutocomplete(optionsCurrency);
+
+    $("#currencyFilter").keypress(function () {
+        $("#buyCurrencyId").val(-1);
+    })
+
+    var optionsExchanges = {
+        url: function(phrase) {
+            return "/data/exchanges";
+        },
+        getValue: "name",
+        template: {
+            type: "description",
+            fields: {
+                description: "url"
+            }
+        },
+        placeholder:"Chose your exchange",
+        list: {
+            onChooseEvent: function() {
+                exchangeId = $("#exchangesList").getSelectedItemData().id;
+                $("#exchangeId").val(exchangeId);
+
+            }
+        }
+    };
+
+    $("#exchangesList").easyAutocomplete(optionsExchanges)
+
+    var optionsMarkets = {
+        url: function(phrase) {
+            return "/data/exchange/"+exchangeId+"/market/pay/"+currencyId;
+        },
+        getValue: "name",
+        placeholder:"Chose your Market",
+        list: {
+            onChooseEvent: function() {
+            }
+        }
+    };
+
+    $("#market").easyAutocomplete(optionsMarkets);
+
+    $("#transactionForm").on('submit',function () {
+        if($("#buyCurrencyId").val()==-1){
+            alert("Unvalidate Coin!");
+            return false;
+        }
+        else
+            return true;
+    });
+
+
+    /*]]>*/
+</script>
+</html>

@@ -2,6 +2,7 @@ package com.bewire.Models;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -14,6 +15,7 @@ public class Transaction {
     private int payAssetId;
     private BigDecimal buyAmount;
     private BigDecimal payAmount;
+    private Date date;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -56,6 +58,15 @@ public class Transaction {
         this.fee = fee;
     }
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "Date")
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     @Column(name = "Buy_Asset_Id", nullable = true)
     public int getBuyAssetId() {

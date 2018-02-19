@@ -1,37 +1,33 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <title>Your Assets</title>
+    <title>Currencies</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/bootstrap-reboot.css}"/>
     <link rel="stylesheet" th:href="@{/css/sortableTabel.css}"/>
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-    <script type="text/javascript" th:src="@{/js/jquery.tablesorter.js}"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.tablesorter.js}"></script>
     <script type="text/javascript" src="/js/bootstrap.bundle.js"></script>
 </head>
 <body>
 <div class="container">
     <div th:replace="header :: header"></div>
-    <table id="assetsTable" class="table tablesorter">
+    <table id="walletsTable" class="table tablesorter">
         <thead class="thead-dark">
         <tr>
             <th scope="col">Id</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Currency</th>
             <th scope="col">Wallet</th>
         </tr>
         </thead>
         <tbody>
-        <th:block th:each="wallet: ${overview.wallets}">
-            <th:block th:each="asset: ${wallet.assets}">
-                <tr>
-                    <td><a th:text="${asset.asset.id}"></a></td>
-                    <td th:text="${#numbers.formatDecimal(asset.asset.amount, 0,'DEFAULT', 4, 'DEFAULT')}">...</td>
-                    <td><a th:text="${asset.currency.name}" th:href="@{/currency/}+${asset.currency.id}"></a></td>
-                    <td><a th:text="${wallet.wallet.name}" th:href="@{/wallet/}+${wallet.wallet.id}"></a></td>
-                </tr>
-            </th:block>
+        <th:block th:each="wallet: ${wallets}">
+            <tr>
+                <th scope="row" th:text="${wallet.id}">1</th>
+                <td>
+                    <a th:text="${wallet.name}" th:href="@{/wallet/{id}(id=${wallet.id})}"></a>
+                </td>
+            </tr>
         </th:block>
         </tbody>
     </table>
@@ -39,9 +35,10 @@
 </body>
 <script th:inline="javascript">
     /*<![CDATA[*/
+
     $(document).ready(function()
         {
-            $("#assetsTable").tablesorter();
+            $("#walletsTable").tablesorter();
         }
     );
     /*]]>*/

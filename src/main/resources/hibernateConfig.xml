@@ -26,7 +26,7 @@
     <mapping class="com.bewire.Models.User"/>
       <mapping class="com.bewire.Models.Pricealaram"/>
       <mapping class="com.bewire.Models.CurrencyMarketPrice"/>
-      <mapping class="com.bewire.Models.PriceAlaram"/>
+      <mapping class="com.bewire.Models.PriceAlarm"/>
       <mapping class="com.bewire.Models.Wallet"/>
       <mapping class="com.bewire.Models.Exchange"/>
       <mapping class="com.bewire.Models.Role"/>

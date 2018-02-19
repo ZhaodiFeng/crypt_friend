@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "price_alaram", schema = "crypt_friend")
-public class PriceAlaram {
+public class PriceAlarm {
     private int id;
     private String userId;
     private int marketId;
@@ -68,7 +68,7 @@ public class PriceAlaram {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PriceAlaram that = (PriceAlaram) o;
+        PriceAlarm that = (PriceAlarm) o;
         return id == that.id &&
                 marketId == that.marketId &&
                 price == that.price &&

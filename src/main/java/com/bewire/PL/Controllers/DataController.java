@@ -1,12 +1,13 @@
 package com.bewire.PL.Controllers;
 
-import com.bewire.BLL.CurrencyBLL;
-import com.bewire.BLL.MarketBLL;
-import com.bewire.BLL.UserAssetsBLL;
+import com.bewire.BLL.*;
+import com.bewire.Models.Asset;
 import com.bewire.Models.Currency;
+import com.bewire.Models.Exchange;
 import com.bewire.Models.Market;
 import com.bewire.PL.DTO.CurrencyFilterJSONDTO;
 import com.bewire.PL.DTO.UserWalletsDTO;
+import com.bewire.Utilities.UserDetailTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +29,30 @@ public class DataController {
     private UserAssetsBLL userAssetsBLL;
 
     @Autowired
+    private AssetBLL assetBLL;
+
+    @Autowired
     private MarketBLL marketBLL;
+
+    @Autowired
+    private ExchangeBLL exchangeBLL;
+
+    @GetMapping("exchanges")
+    public List<Exchange> getAllExchanges(){
+        return exchangeBLL.getAllExchanges();
+    }
+
+    @GetMapping("exchange/{exchangeId}/market/buy/{currencyId}")
+    public List<Market> getMarketsForBuyCurrencyAndExchange(@PathVariable("exchangeId")int exchangeId
+            ,@PathVariable("currencyId")int currencyId){
+        return marketBLL.getAllByExchangeIdAndAndBuyCurrencyId(exchangeId,currencyId);
+    }
+
+    @GetMapping("exchange/{exchangeId}/market/pay/{currencyId}")
+    public List<Market> getMarketsForPayCurrencyAndExchange(@PathVariable("exchangeId")int exchangeId
+            ,@PathVariable("currencyId")int currencyId){
+        return marketBLL.getAllByExchangeIdAndAndPayCurrencyId(exchangeId,currencyId);
+    }
 
     @GetMapping("market/buy/{currencyId}")
     public List<Market> getBuyMarketsForCurrency(@PathVariable("currencyId")int id){
@@ -74,5 +98,10 @@ public class DataController {
         OAuth2Authentication authentication=(OAuth2Authentication) principal;
         Map<String,Object> map= (Map<String, Object>) authentication.getUserAuthentication().getDetails();
         return userAssetsBLL.getUserWallets((String)map.get("sub"));
+    }
+
+    @GetMapping("assets/currency/{id}")
+    public List<Asset> getAssetsByCurrency(@PathVariable  int id,Principal principal){
+        return assetBLL.getAllAssetsByCurrency(id,UserDetailTool.getUserId(principal));
     }
 }

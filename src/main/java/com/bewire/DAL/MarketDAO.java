@@ -9,4 +9,6 @@ public interface MarketDAO extends CrudRepository<Market,Integer> {
     Market findFirstByName(String name);
     List<Market> findAllByPayCurrencyId(int id);
     List<Market> findAllByBuyCurrencyId(int id);
+    List<Market> getAllByExchangeIdAndAndBuyCurrencyId(int exchangeId,int currencyId );
+    List<Market> getAllByExchangeIdAndAndPayCurrencyId(int exchangeId,int currencyId );
 }
