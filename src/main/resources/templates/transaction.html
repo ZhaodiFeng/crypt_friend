@@ -42,10 +42,7 @@
                 </p>
                 <p>
                     Price <input type="number" class="price"/>
-                    <a class="coin1"></a>/<a class="coin2"></a>
-                </p>
-                <p>
-                    Recieve:<input class="amount1" type="number"/><a class="coin1"></a>
+                    <a class="coin2"></a>/<a class="coin1"></a> Updated at:<a class="updateTime"></a>
                 </p>
             </div>
 
@@ -59,10 +56,7 @@
                 </p>
                 <p>
                     Price <input type="number" class="price"/>
-                    <a class="coin2"></a>/<a class="coin1"></a>
-                </p>
-                <p>
-                    Recieve:<input class="amount2" type="number"/><a class="coin2"></a>
+                    <a class="coin1"></a>/<a class="coin2"></a> Updated at:<a class="updateTime"></a>
                 </p>
             </div>
 
@@ -76,8 +70,44 @@
     </form>
 </div>
 </body>
+<style>
+    input[type='number'] {
+        appearance: textfield;
+    }
+    input[type='number']::-webkit-inner-spin-button,
+    input[type='number']::-webkit-outer-spin-button,
+    input[type='number']:hover::-webkit-inner-spin-button,
+    input[type='number']:hover::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0; }
+</style>
 <script th:inline="javascript">
     /*<![CDATA[*/
+    var calcuAmount=function () {
+        //prefix
+        var p="#"+marketType+"Form ";
+        var buy=$(p+".buyAmount").val().length>0;
+        var pay=$(p+".payAmount").val().length>0;
+        var price=$(p+".price").val()>0;
+
+        if(this.className=="buyAmount"||this.className=="price"){
+            if(price&&buy)
+                $(p+".payAmount").val(parseFloat($(p+".price").val())*parseFloat($(p+".buyAmount").val()));
+        }
+
+        else if(this.className=="payAmount"||this.className=="price"){
+            if(price&&pay)
+                $(p+".buyAmount").val(parseFloat($(p+".payAmount").val())/parseFloat($(p+".price").val()));
+
+        }
+
+        else if(!price&&buy&&pay)
+            $(p+".price").val(parseFloat($(p+".payAmount").val())/parseFloat($(p+".buyAmount").val()));
+
+    }
+
+    $("input[type='number']").attr("step","0.0001");
+    $("input[type='number']").change(calcuAmount);
 
     var topCoins;
     var getTopCoins=function (callback) {
@@ -101,7 +131,7 @@
             opposingType="pay";
 
         $('#'+opposingType+'Form').css('display','none');
-        $('#'+pposingType+'Form input').prop( "disabled", true);
+        $('#'+opposingType+'Form input').prop( "disabled", true);
         marketType=type;
         $('#'+marketType+'Form').css('display','block');
         $('#'+marketType+'Form input').prop( "disabled", false);
@@ -228,6 +258,7 @@
             fillForm();
             if(value>0){
                 $("#tradeForm").css("display","block");
+                getMarketPrice();
             }
             else
                 $("#tradeForm").css("display","none");
@@ -259,6 +290,20 @@
     })
 
     $('#payForm input').prop( "disabled", true);
+    
+    var getMarketPrice=function () {
+        if(market.getValue()>0){
+            var id=market.getValue();
+            $.get("/data/market/"+id,function (result) {
+                id=market.getValue();
+                $("#"+marketType+"Form .price").val(result.last);
+                $("#"+marketType+"Form .price").trigger("change");
+                $("#"+marketType+"Form .updateTime").text(Date());
+            })
+        }
+    }
+
+   window.setInterval(getMarketPrice,10000);
     /*]]>*/
 </script>
 </html>

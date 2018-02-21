@@ -6,10 +6,7 @@ import com.bewire.DAL.MarketDAO;
 import com.bewire.Models.Currency;
 import com.bewire.Models.Exchange;
 import com.bewire.Models.Market;
-import com.bewire.PL.DTO.BittrexCurrenciesCurrencyDTO;
-import com.bewire.PL.DTO.BittrexCurrenciesDTO;
-import com.bewire.PL.DTO.BittrexMarketDTO;
-import com.bewire.PL.DTO.BittrexMarketsListDTO;
+import com.bewire.PL.DTO.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -24,6 +21,8 @@ public class BittrexBLL implements IMarketApiBLL {
     private String bittrexUrl;
     @Value("${bittrex.api.getmarkets.url}")
     private String bittrexMarketsUrl;
+    @Value("${bittrex.api.gettticker.url}")
+    private String bittrexTickerUrl;
     @Autowired
     private CurrencyDAO currencyDAO;
     @Autowired
@@ -66,4 +65,13 @@ public class BittrexBLL implements IMarketApiBLL {
         }
 
     }
+
+    @Override
+    public BittrexTickeResultDTO getMarketTicker(int marketId) throws IOException {
+        String name=marketDAO.findOne(marketId).getName();
+        BittrexTickerDTO bittrexTickerDTO=(BittrexTickerDTO)customHttpClient.getObjectFromHttpGet(bittrexTickerUrl+"?market="+name,BittrexTickerDTO.class);
+        return bittrexTickerDTO.getResult();
+    }
+
+
 }

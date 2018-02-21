@@ -5,6 +5,7 @@ import com.bewire.Models.Asset;
 import com.bewire.Models.Currency;
 import com.bewire.Models.Exchange;
 import com.bewire.Models.Market;
+import com.bewire.PL.DTO.BittrexTickeResultDTO;
 import com.bewire.PL.DTO.CurrencyFilterJSONDTO;
 import com.bewire.PL.DTO.MarketDTO;
 import com.bewire.PL.DTO.UserWalletsDTO;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +39,8 @@ public class DataController {
 
     @Autowired
     private ExchangeBLL exchangeBLL;
+    @Autowired
+    private IMarketApiBLL marketApiBLL;
 
     @GetMapping("exchanges")
     public List<Exchange> getAllExchanges(){
@@ -53,6 +57,11 @@ public class DataController {
     public List<MarketDTO> getMarketsForPayCurrencyAndExchange(@PathVariable("exchangeId")int exchangeId
             ,@PathVariable("currencyId")int currencyId){
         return marketBLL.getAllByExchangeIdAndAndPayCurrencyId(exchangeId,currencyId);
+    }
+
+    @GetMapping("market/{id}")
+    public BittrexTickeResultDTO getMarketTicker(@PathVariable("id")int id) throws IOException {
+        return marketApiBLL.getMarketTicker(id);
     }
 
     @GetMapping("market/buy/{currencyId}")
