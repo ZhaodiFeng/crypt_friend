@@ -6,6 +6,7 @@ import com.bewire.Models.Currency;
 import com.bewire.Models.Exchange;
 import com.bewire.Models.Market;
 import com.bewire.PL.DTO.CurrencyFilterJSONDTO;
+import com.bewire.PL.DTO.MarketDTO;
 import com.bewire.PL.DTO.UserWalletsDTO;
 import com.bewire.Utilities.UserDetailTool;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,13 +44,13 @@ public class DataController {
     }
 
     @GetMapping("exchange/{exchangeId}/market/buy/{currencyId}")
-    public List<Market> getMarketsForBuyCurrencyAndExchange(@PathVariable("exchangeId")int exchangeId
-            ,@PathVariable("currencyId")int currencyId){
-        return marketBLL.getAllByExchangeIdAndAndBuyCurrencyId(exchangeId,currencyId);
+    public List<MarketDTO> getMarketsForBuyCurrencyAndExchange(@PathVariable("exchangeId")int exchangeId
+            , @PathVariable("currencyId")int currencyId){
+         return marketBLL.getAllByExchangeIdAndAndBuyCurrencyId(exchangeId,currencyId);
     }
 
     @GetMapping("exchange/{exchangeId}/market/pay/{currencyId}")
-    public List<Market> getMarketsForPayCurrencyAndExchange(@PathVariable("exchangeId")int exchangeId
+    public List<MarketDTO> getMarketsForPayCurrencyAndExchange(@PathVariable("exchangeId")int exchangeId
             ,@PathVariable("currencyId")int currencyId){
         return marketBLL.getAllByExchangeIdAndAndPayCurrencyId(exchangeId,currencyId);
     }

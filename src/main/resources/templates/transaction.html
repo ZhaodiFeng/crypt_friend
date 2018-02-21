@@ -7,9 +7,8 @@
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.bundle.js"></script>
-    <script type="text/javascript" src="/js/jquery.easy-autocomplete.min.js"></script>
-    <link rel="stylesheet" th:href="@{/css/easy-autocomplete.min.css}"/>
-    <link rel="stylesheet" th:href="@{/css/formStyle.css}"/>
+    <script type="text/javascript" src="/js/selectize.min.js"></script>
+    <link rel="stylesheet" href="/css/selectize.default.css"/>
 </head>
 <body>
 <div class="container">
@@ -18,100 +17,248 @@
     <!--/*@thymesVar id="transaction" type="com.bewire.PL.DTO.TransactionDTO"*/-->
     <form id="transactionForm" th:action="@{/transaction}" th:object="${transaction}" method="post">
         <p><a>Coin </a>
-            <input id="currencyFilter"/>
-            <input type="number" th:field="*{buyCurrencyId}" hidden="hidden"/></p>
-        <p>Exchange <input id="exchangesList"/><input id="exchangeId" hidden="hidden"/></p>
-        <p>Market <input id="market"/><input th:field="*{marketId}" hidden="hidden"/></p>
-        <p>Buy Sale<input type="checkbox" id="buyOrSale" value="1"/>Buy</p>
-        <p>Amount <input th:field="*{buyAmount}"/><a th:text="*{buyCurrencyId}"></a></p>
-        <p>Price <input id="price"/></p>
-        <p>Amount <input th:field="*{payAmount}"/><a th:text="*{payCurrencyId}"/></p>
-        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+            <input id="coin1" required="required"/>
+        </p>
+        <p>Exchange <input id="exchange"/></p>
+        <p>Market <input id="market" name="marketId" required="required"/></p>
+        <p><div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-secondary active" onclick="marketTypeOnclick('buy');">
+                <input type="radio"  autocomplete="off" checked="checked"/>Buy
+            </label>
+                <label class="btn btn-secondary" onclick="marketTypeOnclick('pay');">
+                <input type="radio"  autocomplete="off"/>Sell
+            </label>
+            </div>
+        </p>
+
+        <div id="tradeForm" style="display: none">
+            <div id="buyForm">
+                <p>
+                    <input class="buyAmount" required="required" type="number"/>
+                    <a class="coin1"></a>
+                    <span>&#8592;</span>
+                    <input class="payAmount" required="required" type="number"/>
+                    <a class="coin2"></a>
+                </p>
+                <p>
+                    Price <input type="number" class="price"/>
+                    <a class="coin1"></a>/<a class="coin2"></a>
+                </p>
+                <p>
+                    Recieve:<input class="amount1" type="number"/><a class="coin1"></a>
+                </p>
+            </div>
+
+            <div id="payForm" style="display: none" >
+                <p>
+                    <input class="payAmount" required="required"  type="number"/>
+                    <a class="coin1"></a>
+                    <span>&#8594;</span>
+                    <input class="buyAmount" required="required"  type="number"/>
+                    <a class="coin2"></a>
+                </p>
+                <p>
+                    Price <input type="number" class="price"/>
+                    <a class="coin2"></a>/<a class="coin1"></a>
+                </p>
+                <p>
+                    Recieve:<input class="amount2" type="number"/><a class="coin2"></a>
+                </p>
+            </div>
+
+            <input th:field="*{buyCurrencyId}" hidden="hidden"/>
+            <input th:field="*{payCurrencyId}" hidden="hidden"/>
+            <input th:field="*{buyAmount}"  hidden="hidden"/>
+            <input th:field="*{payAmount}" hidden="hidden"/>
+
+            <p><input id="transactionSubmit" type="submit" value="Confirm" /> <input type="reset" value="Reset" /></p>
+        </div>
     </form>
 </div>
 </body>
 <script th:inline="javascript">
     /*<![CDATA[*/
-    var exchangeId;
-    var isBuy;
-    var currencyId;
 
-    var optionsCurrency = {
-        url: function(phrase) {
-            return "/data/currency/filter/" + phrase;
-        },
-        listLocation: "suggestions",
-        matchResponseProperty: "query",
-        getValue: "name",
-        template: {
-            type: "description",
-            fields: {
-                description: "symbol"
+    var topCoins;
+    var getTopCoins=function (callback) {
+        if(topCoins==null)
+            $.get("/data/currency/top/20",function (result) {
+                topCoins=result.suggestions;
+                callback(topCoins);
+            })
+        else{
+            return callback(topCoins);}
+    }
+
+    var exchanges;
+    var marketType="buy";
+
+    var marketTypeOnclick=function (type) {
+        var opposingType;
+        if(type=="pay")
+            opposingType="buy";
+        else
+            opposingType="pay";
+
+        $('#'+opposingType+'Form').css('display','none');
+        $('#'+pposingType+'Form input').prop( "disabled", true);
+        marketType=type;
+        $('#'+marketType+'Form').css('display','block');
+        $('#'+marketType+'Form input').prop( "disabled", false);
+        getMarkets();
+    }
+
+
+    $.get("/data/exchanges",
+        function (result) {
+           exchanges=result;
+            $("#exchange").selectize({
+                valueField:'id',
+                searchField:['name','url'],
+                maxItems:1,
+                placeholder:"Exchange",
+                options:exchanges,
+                preload:true,
+                onChange:function(value){getMarkets()},
+                render: {
+                    item: function(item, escape) {
+                        return '<div>' +
+                            (item.name ? '<span class="name">' + escape(item.name) + '</span>' : '') +
+                            (item.url ? '-<span class="description">' + escape(item.url) + '</span>' : '') +
+                            '</div>';
+                    },
+                    option: function(item, escape) {
+                        var label = item.name || item.url;
+                        var caption = item.name ? item.url : null;
+                        return '<div>' +
+                            '<span class="label">' + escape(label) + '</span>' +
+                            (caption ? '-<span class="caption">' + escape(caption) + '</span>' : '') +
+                            '</div>';
+                    }
+                }
+            })
+        });
+
+    $("#coin1").selectize({
+        valueField:'id',
+        searchField:['name','symbol'],
+        maxItems:1,
+        create:false,
+        placeholder:"Coin",
+        preload:true,
+        render: {
+            item: function(item, escape) {
+                return '<div>' +
+                    (item.name ? '<span class="coin1Name">' + escape(item.name) + '</span>' : '') +
+                    (item.symbol ? '-<span class="coin1Symbol">' + escape(item.symbol) + '</span>' : '') +
+                    '</div>';
+            },
+            option: function(item, escape) {
+                var label = item.name || item.symbol;
+                var caption = item.name ? item.symbol : null;
+                return '<div>' +
+                    '<span class="label">' + escape(label) + '</span>' +
+                    (caption ? '-<span class="caption">' + escape(caption) + '</span>' : '') +
+                    '</div>';
             }
         },
-        placeholder:"Chose your coin",
-        list: {
-            onChooseEvent: function() {
-                var value = $("#currencyFilter").getSelectedItemData().id;
-                currencyId=value;
-                $("#buyCurrencyId").val(currencyId);
+        onChange:function(value){
+            getMarkets();
+        },
+        load:function (query,callback) {
+            if (!query.length){
+                return getTopCoins(callback);
             }
+            $.ajax({
+                url: '/data/currency/filter/'+ encodeURIComponent(query),
+                type: 'GET',
+                error: function() {
+                    callback();
+                },
+                success: function(res) {
+                    callback(res.suggestions);
+                }
+            });
         }
-    };
-
-    $("#currencyFilter").easyAutocomplete(optionsCurrency);
-
-    $("#currencyFilter").keypress(function () {
-        $("#buyCurrencyId").val(-1);
     })
 
-    var optionsExchanges = {
-        url: function(phrase) {
-            return "/data/exchanges";
-        },
-        getValue: "name",
-        template: {
-            type: "description",
-            fields: {
-                description: "url"
+    var getMarkets=function () {
+        if(!$("#exchange").val()>0||!$("#coin1").val()>0)
+           market.disable();
+        else {
+            market.clearOptions();
+            market.load(function(callback) {
+                $.ajax({
+                    url: "/data/exchange/"+$("#exchange").val()+"/market/"+marketType+"/"+$("#coin1").val(),
+                    success: function(results) {
+                        market.enable();
+                        coin1Id=$("#coin1").val();
+                        callback(results);
+                    },
+                    error: function() {
+                        callback();
+                    }
+                })
+            });
+        };
+    }
+
+    $("#market").selectize({
+        valueField:'marketId',
+        searchField:'marketName',
+        maxItems:1,
+        create:false,
+        placeholder:"Please chose your exchange and coin",
+        render: {
+            item: function(item, escape) {
+                return '<div>' +
+                    (item.marketName ? '<span class="Name">' + escape(item.marketName) + '</span>' : '') +
+                    (item.currency2Name ? '<span class="coin2Name" hidden="hidden">' + escape(item.currency2Name) + '</span>' : '') +
+                    (item.currency2Id ? '<span class="coin2Id" hidden="hidden">' + escape(item.currency2Id) + '</span>' : '')
+                    '</div>';
+            },
+            option: function(item, escape) {
+                var label = item.marketName;
+                return '<div>' +
+                    '<span class="label">' + escape(label) + '</span>' +
+                    '</div>';
             }
         },
-        placeholder:"Chose your exchange",
-        list: {
-            onChooseEvent: function() {
-                exchangeId = $("#exchangesList").getSelectedItemData().id;
-                $("#exchangeId").val(exchangeId);
-
+        onChange:function (value) {
+            fillForm();
+            if(value>0){
+                $("#tradeForm").css("display","block");
             }
+            else
+                $("#tradeForm").css("display","none");
         }
-    };
+    })
 
-    $("#exchangesList").easyAutocomplete(optionsExchanges)
+    var market= $("#market")[0].selectize;
+    market.disable();
 
-    var optionsMarkets = {
-        url: function(phrase) {
-            return "/data/exchange/"+exchangeId+"/market/pay/"+currencyId;
-        },
-        getValue: "name",
-        placeholder:"Chose your Market",
-        list: {
-            onChooseEvent: function() {
-            }
+    var fillForm=function () {
+        var coin1Name=$("#transactionForm .coin1Name").text();
+        var coin2Name=$("#transactionForm .coin2Name").text();
+        $("#tradeForm .coin1").text(coin1Name);
+        $("#tradeForm .coin2").text(coin2Name);
+    }
+
+    $("#transactionForm").on("submit",function () {
+        if(marketType=="buy"){
+            $("#buyCurrencyId").val($("#coin1").val());
+            $("#payCurrencyId").val($("#transactionForm .coin2Id").text());
         }
-    };
-
-    $("#market").easyAutocomplete(optionsMarkets);
-
-    $("#transactionForm").on('submit',function () {
-        if($("#buyCurrencyId").val()==-1){
-            alert("Unvalidate Coin!");
-            return false;
+        else if(marketType=="pay") {
+            $("#payCurrencyId").val($("#coin1").val());
+            $("#buyCurrencyId").val($("#transactionForm .coin2Id").text());
         }
-        else
-            return true;
-    });
+        $("#buyAmount").val($(".buyAmount").val());
+        $("#payAmount").val($(".payAmount").val());
+        return true;
+    })
 
-
+    $('#payForm input').prop( "disabled", true);
     /*]]>*/
 </script>
 </html>

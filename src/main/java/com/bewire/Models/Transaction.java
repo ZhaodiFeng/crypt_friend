@@ -8,7 +8,6 @@ import java.util.Objects;
 @Entity
 public class Transaction {
     private int id;
-    private int transactionTypeId;
     private int marketId;
     private int fee;
     private int buyAssetId;
@@ -26,16 +25,6 @@ public class Transaction {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-
-    @Column(name = "Transaction_Type_Id", nullable = false)
-    public int getTransactionTypeId() {
-        return transactionTypeId;
-    }
-
-    public void setTransactionTypeId(int transactionTypeId) {
-        this.transactionTypeId = transactionTypeId;
     }
 
 
@@ -113,7 +102,6 @@ public class Transaction {
         if (o == null || getClass() != o.getClass()) return false;
         Transaction that = (Transaction) o;
         return id == that.id &&
-                transactionTypeId == that.transactionTypeId &&
                 fee == that.fee &&
                 Objects.equals(buyAssetId, that.buyAssetId) &&
                 Objects.equals(payAssetId, that.payAssetId) &&
@@ -124,6 +112,6 @@ public class Transaction {
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, transactionTypeId, marketId, fee, buyAssetId, payAssetId, buyAmount, payAmount);
+        return Objects.hash(id, marketId, fee, buyAssetId, payAssetId, buyAmount, payAmount);
     }
 }

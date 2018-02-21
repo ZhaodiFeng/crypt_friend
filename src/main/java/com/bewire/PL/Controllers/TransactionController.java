@@ -2,8 +2,10 @@ package com.bewire.PL.Controllers;
 
 import com.bewire.BLL.AuthenticationBLL;
 import com.bewire.BLL.TransactionBLL;
+import com.bewire.BLL.WalletBLL;
 import com.bewire.Models.Transaction;
 import com.bewire.PL.DTO.TransactionDTO;
+import com.bewire.Utilities.UserDetailTool;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import netscape.security.ForbiddenTargetException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,20 +23,23 @@ public class TransactionController {
     private AuthenticationBLL authenticationBLL;
     @Autowired
     private TransactionBLL transactionBLL;
+    @Autowired
+    private WalletBLL walletBLL;
+
 
     @GetMapping("")
-    public String newTransaction(@RequestParam int walletId , Model model){
+    public String newTransaction(Model model){
         TransactionDTO transaction=new TransactionDTO();
-        transaction.setWalletId(walletId);
         model.addAttribute("transaction",transaction);
         return "transaction";
     }
 
     @PostMapping("")
     public String postTransaction(@ModelAttribute TransactionDTO transaction, Principal principal){
+        transaction.setWalletId(walletBLL.getWalletsOfUser(UserDetailTool.getUserId(principal)).get(0).getId());
         if(authenticationBLL.authenticateTransaction(transaction,principal)){
             transactionBLL.procesTransaction(transaction);
-            return "wallet";
+            return "redirect:/wallet";
         }
         else
             return "redirect:/";

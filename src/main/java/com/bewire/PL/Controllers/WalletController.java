@@ -26,33 +26,8 @@ public class WalletController {
     @GetMapping("")
     public String getAllWallets(Principal principal,Model model){
         String sub=UserDetailTool.getUserId(principal);
-        model.addAttribute("wallets",walletBLL.getWalletsOfUser(sub));
-        return "walletsList";
-    }
-
-    @GetMapping("{id}")
-    public String getWallet(@PathVariable int id, Model model,Principal principal){
-        String sub= UserDetailTool.getUserId(principal);
-        if(authenticationBLL.authenticateWallet(id,sub)){
-            model.addAttribute("wallet",walletBLL.getWalletAssets(id));
-            return "walletOverview";
-        }
-        else
-            return "redirect:/403";
-    }
-
-    @GetMapping("{id}/assets/add")
-    public  String addAsset(@PathVariable int id, Model model,Principal principal){
-        String sub= UserDetailTool.getUserId(principal);
-        if(authenticationBLL.authenticateWallet(id,sub)){
-            Asset asset=new Asset();
-            asset.setWalletId(id);
-            model.addAttribute("asset",asset);
-            model.addAttribute("wallet",walletBLL.getWallet(id));
-            return "walletAddAsset";
-        }
-        else
-            return "redirect:/403";
+        model.addAttribute("wallet",walletBLL.getWalletAssets( walletBLL.getWalletsOfUser(sub).get(0).getId()));
+        return "walletOverview";
     }
 
     @PostMapping("{id}/delete")

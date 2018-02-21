@@ -28,12 +28,13 @@ public class TransactionBLL implements ITransactionBLL {
         Asset buy=assetDAO.findByWalletIdAndCurrencyId(transaction.getWalletId(),transaction.getBuyCurrencyId());
         if(buy==null)
             buy = new Asset(transaction.getWalletId(),transaction.getBuyCurrencyId());
-        Asset pay=assetDAO.findByWalletIdAndCurrencyId(transaction.getWalletId(),transaction.getBuyCurrencyId());
-        if(pay==null)
-            pay = new Asset(transaction.getWalletId(),transaction.getBuyCurrencyId());
         buy.setAmount(buy.getAmount().add(transaction.getBuyAmount()));
-        pay.setAmount(pay.getAmount().add(transaction.getPayAmount().negate()));
         assetDAO.save(buy);
+
+        Asset pay=assetDAO.findByWalletIdAndCurrencyId(transaction.getWalletId(),transaction.getPayCurrencyId());
+        if(pay==null)
+            pay = new Asset(transaction.getWalletId(),transaction.getPayCurrencyId());
+        pay.setAmount(pay.getAmount().add(transaction.getPayAmount().negate()));
         assetDAO.save(pay);
 
         Transaction record=new Transaction();
@@ -43,5 +44,6 @@ public class TransactionBLL implements ITransactionBLL {
         record.setPayAssetId(pay.getId());
         record.setMarketId(transaction.getMarketId());
         record.setDate(new Timestamp(System.currentTimeMillis()));
+        transactionDAO.save(record);
     }
 }
