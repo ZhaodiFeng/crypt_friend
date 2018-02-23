@@ -22,7 +22,15 @@ public class AssetBLL implements IAssetBLL {
     private WalletDAO walletDAO;
     @Override
     public void addAsset(Asset asset) {
-        assetDAO.save(asset);
+        Asset a=assetDAO.findByWalletIdAndCurrencyId(asset.getWalletId(),asset.getCurrencyId());
+        if((a!=null)){
+            a.setAmount(asset.getAmount());
+            assetDAO.save(a);
+        }
+        else{
+            asset.setId(new Asset().getId());
+            assetDAO.save(asset);
+        }
     }
 
     @Override

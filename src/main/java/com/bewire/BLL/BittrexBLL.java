@@ -1,19 +1,23 @@
 package com.bewire.BLL;
 
-import com.bewire.DAL.CurrencyDAO;
-import com.bewire.DAL.ExchangeDAO;
-import com.bewire.DAL.MarketDAO;
+import com.bewire.DAL.*;
 import com.bewire.Models.Currency;
+import com.bewire.Models.CurrencyMarketPrice;
 import com.bewire.Models.Exchange;
 import com.bewire.Models.Market;
 import com.bewire.PL.DTO.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BittrexBLL implements IMarketApiBLL {
@@ -31,10 +35,16 @@ public class BittrexBLL implements IMarketApiBLL {
     private ExchangeDAO exchangeDAO;
     @Autowired
     private CustomHttpClient customHttpClient;
+    @Autowired
+    private ApplicationContext applicationContext;
+    @Autowired
+    private CurrentPrice currentPrice;
+    @Autowired
+    private TaskExecutor taskExecutor;
 
     @Transactional
     public void UpdateCurrenciesList() throws IOException {
-       BittrexCurrenciesDTO bittrexCurrenciesDTO=(BittrexCurrenciesDTO) customHttpClient.getObjectFromHttpGet(bittrexUrl,BittrexCurrenciesDTO.class);
+       BittrexCurrenciesDTO bittrexCurrenciesDTO= customHttpClient.getObjectFromHttpGet(bittrexUrl,BittrexCurrenciesDTO.class);
        List<BittrexCurrenciesCurrencyDTO> currencies=bittrexCurrenciesDTO.getResult();
        for (BittrexCurrenciesCurrencyDTO c :
               currencies) {
@@ -49,6 +59,7 @@ public class BittrexBLL implements IMarketApiBLL {
     }
 
     @Override
+    @Transactional
     public void UpdateMarketsList() throws IOException {
         BittrexMarketsListDTO bittrexMarketsListDTO=(BittrexMarketsListDTO) customHttpClient.getObjectFromHttpGet(bittrexMarketsUrl,BittrexMarketsListDTO.class);
         List<BittrexMarketDTO> markets=bittrexMarketsListDTO.getResult();
@@ -68,10 +79,21 @@ public class BittrexBLL implements IMarketApiBLL {
 
     @Override
     public BittrexTickeResultDTO getMarketTicker(int marketId) throws IOException {
-        String name=marketDAO.findOne(marketId).getName();
-        BittrexTickerDTO bittrexTickerDTO=(BittrexTickerDTO)customHttpClient.getObjectFromHttpGet(bittrexTickerUrl+"?market="+name,BittrexTickerDTO.class);
-        return bittrexTickerDTO.getResult();
+     return currentPrice.getCurrenctPrice().get(marketId);
     }
 
+    @Scheduled(cron = "${bittex.api.ticker.cron}")
+    public void  UpdateCurrentPrice(){
+        System.out.println("Loop:");
+        for (Market m:
+             marketDAO.findAll()) {
+                BittrexGetPriceThread thread= (BittrexGetPriceThread) applicationContext.getBean("bittrexGetPriceThread");
+                thread.setMarket(m);
+                taskExecutor.execute(thread);
+        }
+    }
 
+    public  Map<Integer, BittrexTickeResultDTO> getCurrentMarketsPrice(){
+        return currentPrice.getCurrenctPrice();
+    }
 }

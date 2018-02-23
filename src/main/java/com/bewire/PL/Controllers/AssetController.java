@@ -3,6 +3,7 @@ package com.bewire.PL.Controllers;
 import com.bewire.BLL.IAssetBLL;
 import com.bewire.BLL.IAuthenticationBLL;
 import com.bewire.BLL.IUserAssetsBLL;
+import com.bewire.BLL.IWalletBLL;
 import com.bewire.Models.Asset;
 import com.bewire.Utilities.UserDetailTool;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class AssetController {
     private IAuthenticationBLL authenticationBLL;
     @Autowired
     private IAssetBLL assetBLL;
+    @Autowired
+    private IWalletBLL walletBLL;
 
     @GetMapping("")
     public String overview(Principal principal, Model model){
@@ -35,11 +38,8 @@ public class AssetController {
     @PostMapping("")
     public String addAsset(@ModelAttribute Asset asset, Principal principal){
         String userId= UserDetailTool.getUserId(principal);
-        if(authenticationBLL.authenticateWallet(asset.getWalletId(),userId)){
-            assetBLL.addAsset(asset);
-            return "redirect:/asset";
-        }
-        else
-            return "redirect:/403";
+        asset.setWalletId(walletBLL.getWalletsOfUser(userId).get(0).getId());
+        assetBLL.addAsset(asset);
+        return "redirect:/wallet";
     }
 }

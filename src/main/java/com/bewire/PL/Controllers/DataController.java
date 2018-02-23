@@ -114,4 +114,9 @@ public class DataController {
     public List<Asset> getAssetsByCurrency(@PathVariable  int id,Principal principal){
         return assetBLL.getAllAssetsByCurrency(id,UserDetailTool.getUserId(principal));
     }
+
+    @GetMapping("price/")
+    public Map<Integer, BittrexTickeResultDTO> getPrice(){
+        return ((BittrexBLL) marketApiBLL).getCurrentMarketsPrice();
+    }
 }
